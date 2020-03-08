@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'traveleverywhere',
+    'travel_everywhere_site',
 ]
 
 MIDDLEWARE = [
@@ -133,4 +133,4 @@ MEDIA_ROOT = MEDIA_DIR
 
 MEDIA_URL = '/media/'
 
-LOGIN_URL = 'travel_everywhere:login'
+LOGIN_URL = 'travel_everywhere_site:login'
