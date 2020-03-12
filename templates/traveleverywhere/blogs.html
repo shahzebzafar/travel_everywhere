@@ -1,19 +1,24 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>TravelEverywhere</title>
-    </head>
+{% extends 'traveleverywhere/base.html' %}
 
-    <body>
-        <div>
-            <a href="/traveleverywhere/">Home</a><br />
-            <a href="/traveleverywhere/blogs/">Blogs</a><br />
-            <a href="/traveleverywhere/forum/">Forum</a><br />
-            <a href="/traveleverywhere/travel/">Travel</a><br />
-        </div>
-    </body>
+{% block title_block %}
+	Blogs - TravelEverywhere
+{% endblock %}
 
-
-
-
-</html>
+{% block topnav %}
+<div class="topnav">
+	<a href="/traveleverywhere/">TravelEverywhere</a>
+	<a class="active" href="/traveleverywhere/blogs">Blogs</a>
+	<a href="/traveleverywhere/forum">Forum</a>
+	<a href="/traveleverywhere/travel">Travel</a>
+	<div class="topnav-right">
+		<a href="/traveleverywhere/signup">Sign up</a>
+		<a href="/traveleverywhere/login">Login</a>
+	</div>
+</div>
+{% endblock %}
+	
+{% block body_block %}
+	<br>
+    (Blog content)
+{% endblock %}

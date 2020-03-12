@@ -17,3 +17,12 @@ def forum(request):
 def travel(request):
     context_dict = {}
     return render(request, 'traveleverywhere/travel.html', context=context_dict)
+	
+def signup(request):
+    context_dict = {}
+    return render(request, 'traveleverywhere/signup.html', context=context_dict)
+	
+def login(request):
+    context_dict = {}
+    return render(request, 'traveleverywhere/login.html', context=context_dict)
+	

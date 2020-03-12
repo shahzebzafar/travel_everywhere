@@ -2,23 +2,23 @@
 {% extends 'traveleverywhere/base.html' %}
 
 {% block title_block %}
-	Forum - TravelEverywhere
+	Login - TravelEverywhere
 {% endblock %}
 
 {% block topnav %}
 <div class="topnav">
 	<a href="/traveleverywhere/">TravelEverywhere</a>
 	<a href="/traveleverywhere/blogs">Blogs</a>
-	<a class="active" href="/traveleverywhere/forum">Forum</a>
+	<a href="/traveleverywhere/forum">Forum</a>
 	<a href="/traveleverywhere/travel">Travel</a>
 	<div class="topnav-right">
 		<a href="/traveleverywhere/signup">Sign up</a>
-		<a href="/traveleverywhere/login">Login</a>
+		<a class="active" href="/traveleverywhere/login">Login</a>
 	</div>
 </div>
 {% endblock %}
-
+	
 {% block body_block %}
 	<br>
-    (Forum content)
+    (Login page)
 {% endblock %}
