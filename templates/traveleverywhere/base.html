@@ -1,4 +1,4 @@
-<! DOCTYPE html>
+<!DOCTYPE html>
 {% load staticfiles %}
 
 <html style="background-color:#9dc3e6">
@@ -50,13 +50,17 @@ body {
 
 {% block topnav %}
 <div class="topnav">
-	<a href="/traveleverywhere/">TravelEverywhere</a>
-	<a href="/traveleverywhere/blogs">Blogs</a>
-	<a href="/traveleverywhere/forum">Forum</a>
-	<a href="/traveleverywhere/travel">Travel</a>
+	<a href="{% url 'traveleverywhere:home' %}">TravelEverywhere</a>
+	<a href="{% url 'traveleverywhere:blogs' %}">Blogs</a>
+	<a href="{% url 'traveleverywhere:forum' %}">Forum</a>
+	<a href="{% url 'traveleverywhere:travel' %}">Travel</a>
 	<div class="topnav-right">
-		<a href="/traveleverywhere/signup">Sign up</a>
-		<a href="/traveleverywhere/login">Login</a>
+		{% if user.is_authenticated %}
+			<a href="{% url 'traveleverywhere:logout' %}">Logout</a>
+		{% else %}
+			<a href="{% url 'traveleverywhere:signup' %}">Sign up</a>
+			<a href="{% url 'traveleverywhere:login' %}">Login</a>
+		{% endif %}
 	</div>
 </div>
 {% endblock %}

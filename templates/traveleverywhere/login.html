@@ -1,24 +1,22 @@
-<!DOCTYPE html>
 {% extends 'traveleverywhere/base.html' %}
+{% load staticfiles %}
 
 {% block title_block %}
 	Login - TravelEverywhere
 {% endblock %}
-
-{% block topnav %}
-<div class="topnav">
-	<a href="/traveleverywhere/">TravelEverywhere</a>
-	<a href="/traveleverywhere/blogs">Blogs</a>
-	<a href="/traveleverywhere/forum">Forum</a>
-	<a href="/traveleverywhere/travel">Travel</a>
-	<div class="topnav-right">
-		<a href="/traveleverywhere/signup">Sign up</a>
-		<a class="active" href="/traveleverywhere/login">Login</a>
-	</div>
-</div>
-{% endblock %}
 	
 {% block body_block %}
-	<br>
-    (Login page)
+<h1>Login to TravelEverywhere</h1>
+<form id="login_form" method="post" action="{% url 'traveleverywhere:login' %}">
+	{% csrf_token %}
+	Username: <input type="text" name="username" value="" size="50" />
+	<br />
+	Password: <input type="password" name="password" value="" size="50" />
+	<br />
+	<input type="submit" value="Login" />
+</form>
+<div>
+	<p>You don't have an account yet?</p>
+	<a href="{% url 'traveleverywhere:signup' %}">Sign up</a>
+</div>
 {% endblock %}

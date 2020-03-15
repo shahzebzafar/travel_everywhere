@@ -1,24 +1,22 @@
-<!DOCTYPE html>
 {% extends 'traveleverywhere/base.html' %}
+{% load staticfiles %}
 
 {% block title_block %}
 	Sign Up - TravelEverywhere
 {% endblock %}
-
-{% block topnav %}
-<div class="topnav">
-	<a href="/traveleverywhere/">TravelEverywhere</a>
-	<a href="/traveleverywhere/blogs">Blogs</a>
-	<a href="/traveleverywhere/forum">Forum</a>
-	<a href="/traveleverywhere/travel">Travel</a>
-	<div class="topnav-right">
-		<a class="active" href="/traveleverywhere/signup">Sign up</a>
-		<a href="/traveleverywhere/login">Login</a>
-	</div>
-</div>
-{% endblock %}
 	
 {% block body_block %}
-	<br>
-    (Sign up page)
+<h1>Sign up for TravelEverywhere</h1>
+{% if registered %}
+<strong>Thank you for signing up!</strong>
+<a href="{% url 'traveleverywhere:home' %}">Return to homepage.</a><br />
+{% else %}
+<strong>Sign up here!</strong><br />
+<form id="user_form" method="post" action="{% url 'traveleverywhere:signup' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+    {{ profile_form.as_p }}
+    <input type="submit" name="submit" value="Sign up" />
+</form>
+{% endif %}
 {% endblock %}
