@@ -7,6 +7,7 @@ class Question(models.Model):
     body = models.CharField(max_length = 500)
     replies = models.IntegerField(default = 0)
     user = models.ForeignKey(User, on_delete = models.CASCADE, null=True)
+    slug = models.SlugField(unique=True)
     
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
@@ -75,6 +76,9 @@ class Agency(models.Model):
     link = models.URLField(max_length=30)
     rating = models.IntegerField(default=0)
     user = models.ManyToManyField(User)
+
+    class Meta:
+        verbose_name_plural = 'Agencies'
 
     def __str__(self):
         return self.name

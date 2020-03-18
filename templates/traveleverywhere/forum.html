@@ -5,20 +5,18 @@
 	Forum - TravelEverywhere
 {% endblock %}
 
-{% block topnav %}
-<div class="topnav">
-	<a href="/traveleverywhere/">TravelEverywhere</a>
-	<a href="/traveleverywhere/blogs">Blogs</a>
-	<a class="active" href="/traveleverywhere/forum">Forum</a>
-	<a href="/traveleverywhere/travel">Travel</a>
-	<div class="topnav-right">
-		<a href="/traveleverywhere/signup">Sign up</a>
-		<a href="/traveleverywhere/login">Login</a>
-	</div>
-</div>
-{% endblock %}
-
 {% block body_block %}
-	<br>
-    (Forum content)
+	<div>
+		{% if questions %}
+			<ul>
+				{% for quesion in questions %}
+				<li>
+					<a href="/traveleverywhere/forum/{{ question.slug }}/">{{ question.title }}</a>
+				</li>
+				{% endfor %}
+			</ul>
+		{% else %}
+			<strong>There are no questons present.</strong>
+		{% endif %}
+	</div>
 {% endblock %}

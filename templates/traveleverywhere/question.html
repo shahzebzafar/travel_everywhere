@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% extends 'traveleverywhere/base.html' %}
+
+{% block title_block %}
+	TravelEverywhere
+{% endblock %}
+
+{% block body_block %}
+<div>
+    {% if question %}
+        <h1><a href="{{ question.title }}">{{ question.title }}</a></h1>
+        {% if answers %}
+            <ul>
+                {% for answ in answers %}
+                    <li>{{ answ.text }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>No answers currently for the question.</strong>
+        {% endif %}
+        {% else %}
+            The specified question does not exist.
+    {% endif %}
+</div>
+{% endblock %}

@@ -6,6 +6,7 @@ from django.shortcuts import redirect
 from traveleverywhere.forms import UserForm, UserProfileForm
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
+from traveleverywhere.models import Question, Answer
 
 
 
@@ -21,8 +22,22 @@ def blogs(request):
     return render(request, 'traveleverywhere/blogs.html', context=context_dict)
 
 def forum(request):
+    question_list = Question.objects.order_by('-replies')[:10]
     context_dict = {}
+    context_dict['questions'] = question_list
     return render(request, 'traveleverywhere/forum.html', context=context_dict)
+
+def show_question(request, question_name_slug):
+    context_dict = {}
+    try:
+        question = Question.objects.get(slug=question_name_slug)
+        answers = Answer.objects.filter(question=question)
+        context_dict['answers'] = answers
+        context_dict['question'] = question
+    except Question.DoesNotExist:
+        context_dict['answers'] = None
+        context_dict['question'] = None
+    return render(request, 'traveleverywhere/question.html', cntext=context_dict)
 
 def travel(request):
     context_dict = {}
