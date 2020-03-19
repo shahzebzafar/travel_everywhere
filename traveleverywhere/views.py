@@ -3,10 +3,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse 
 from django.urls import reverse 
 from django.shortcuts import redirect
-from traveleverywhere.forms import UserForm, UserProfileForm
+from traveleverywhere.forms import UserForm, UserProfileForm, BlogForm, BlogImageForm
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
-from traveleverywhere.models import Question, Answer
+from traveleverywhere.models import Question, Answer, Blog, Blog_Image
+from django.forms import modelformset_factory
+from django.contrib import messages
 
 
 
@@ -17,7 +19,9 @@ def home(request):
     response = render(request, 'traveleverywhere/home.html', context=context_dict)
     return response
 
+@login_required
 def blogs(request):
+    BlogImages = modelformset_factory
     context_dict = {}
     return render(request, 'traveleverywhere/blogs.html', context=context_dict)
 
@@ -37,7 +41,7 @@ def show_question(request, question_name_slug):
     except Question.DoesNotExist:
         context_dict['answers'] = None
         context_dict['question'] = None
-    return render(request, 'traveleverywhere/question.html', cntext=context_dict)
+    return render(request, 'traveleverywhere/question.html', context=context_dict)
 
 def travel(request):
     context_dict = {}

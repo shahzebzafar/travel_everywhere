@@ -29,6 +29,7 @@ class Answer(models.Model):
 
 class Blog(models.Model):
     title = models.URLField(max_length = 50)
+    slug = models.SlugField(max_length = 50, unique=True)
     body = models.CharField(max_length = 10000)
     likes = models.IntegerField(default = 0)
     publish_date = models.DateField(auto_now_add = True)
@@ -46,13 +47,16 @@ class Blog(models.Model):
     
     def __str__(self):
         return self.title
+
+def get_image_filename(instance, filename):
+    title = instance.blog.title
+    slug = slugify(title)
+    return "blog_images/%s-%s" % (slug, filename) 
         
 class Blog_Image(models.Model):
-    image = models.ImageField(upload_to = 'blog_images', blank = True)
-    blog = models.ForeignKey(Blog, on_delete = models.CASCADE)
-    
-    def __str__(self):
-        return self.image
+    blog = models.ForeignKey(Blog, on_delete = models.CASCADE, default = None)
+    image = models.ImageField(upload_to = get_image_filename, verbose_name = "Image") 
+
                 
 class User_Profile(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
