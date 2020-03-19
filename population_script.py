@@ -3,7 +3,8 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'travel_everywhere.settings')
 
 import django
 django.setup()
-from traveleverywhere.models import Question, Answer, Blog, Airline, Agency, BookingWebsite, User
+from traveleverywhere.models import Question, Answer, Blog, Airline, Agency, BookingWebsite, User_Profile
+from django.contrib.auth.models import User
 
 def populate():
     answers_q1 = [
@@ -43,10 +44,12 @@ def populate():
         {'name': 'AirBnB', 'link':'https://www.airbnb.co.uk/', 'rating':36},
     ]
 
+    user1 = add_user('zdravko','travel123')
+    user2 = add_user('john', 'winner')
     for quest, quest_data in questions.items():
-        q = add_question(quest, quest_data['body'])
+        q = add_question(quest, quest_data['body'],user1)
         for answ in quest_data['answers']:
-            add_answer(q, answ['text'])
+            add_answer(q, answ['text'],user2)
     
     for air in airlines:
         add_airline(air['name'],air['link'],air['rating'])
@@ -67,14 +70,20 @@ def populate():
     for web in BookingWebsite.objects.all():
         print(f'-{web}')
     
+def add_user(username, password):
+    user = User.objects.get_or_create(username=username, password=password)[0]
+    user.save()
+    return user
 
-def add_question(title,body):
+def add_question(title,body,user):
     q = Question.objects.get_or_create(title=title, body=body)[0]
+    q.user = user
     q.save()
     return q
 
-def add_answer(quest, text):
+def add_answer(quest, text, user):
     a = Answer.objects.get_or_create(question=quest, text=text)[0]
+    a.user = user
     a.save()
     return a
 
