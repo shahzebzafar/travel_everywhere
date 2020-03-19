@@ -47,6 +47,11 @@ class Blog(models.Model):
     
     def __str__(self):
         return self.title
+
+def get_image_filename(instance, filename):
+    title = instance.blog.title
+    slug = slugify(title)
+    return "blog_images/%s-%s" % (slug, filename) 
         
 def get_image_filename(instance, filename):
     title = instance.blog.title

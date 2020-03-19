@@ -77,7 +77,6 @@ def add_answer(request, question_name_slug):
     context_dict = {'form' : form, 'question' : question}
     return render(request, 'traveleverywhere/add_answer.html', context=context_dict)
 
-
 def travel(request):
     context_dict = {}
     airline_list = Airline.objects.order_by('-rating')[:10]
