@@ -17,11 +17,9 @@ def populate():
 
     questions = {
         'Where is the best place to go in September?': {'answers': answers_q1,
-        'body' : 'Hello, I am planning a big trip this autumn and would love to give me some advice on where.',
-        'replies': 37},
+        'body' : 'Hello, I am planning a big trip this autumn and would love to give me some advice on where.'},
         'Best place to see the Northen lights?': {'answers' : answers_q2,
-        'body' : 'I want to ask fellow travellers where to go to see the Northern lights this year.',
-        'replies' : 20},
+        'body' : 'I want to ask fellow travellers where to go to see the Northern lights this year.'},
     }
 
     airlines = [
@@ -46,7 +44,7 @@ def populate():
     ]
 
     for quest, quest_data in questions.items():
-        q = add_question(quest, quest_data['body'], quest_data['replies'])
+        q = add_question(quest, quest_data['body'])
         for answ in quest_data['answers']:
             add_answer(q, answ['text'])
     
@@ -70,8 +68,8 @@ def populate():
         print(f'-{web}')
     
 
-def add_question(title,body, replies=0):
-    q = Question.objects.get_or_create(title=title, body=body, replies=replies)[0]
+def add_question(title,body):
+    q = Question.objects.get_or_create(title=title, body=body)[0]
     q.save()
     return q
 

@@ -11,10 +11,10 @@
 		{% endif %}
 		{% if questions %}
 			<ul>
-				{% for question in questions %}
+				{% for question,ans_count in questions %}
 				<li>
 					<a href="{% url 'traveleverywhere:show_question' question.slug %}">{{ question.title }}</a>
-					<p>{{ question.replies }} answers</p>
+					<p>{{ ans_count }} answers</p>
 				</li>
 				{% endfor %}
 			</ul>

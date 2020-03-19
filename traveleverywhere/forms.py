@@ -16,7 +16,6 @@ class UserProfileForm(forms.ModelForm):
 class QuestionForm(forms.ModelForm):
     title = forms.CharField(max_length=50, help_text="Please enter your question.")
     body = forms.CharField(max_length=500, help_text="Please give more informaion for the question.")
-    replies = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     class Meta:

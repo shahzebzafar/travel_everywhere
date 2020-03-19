@@ -26,9 +26,13 @@ def blogs(request):
     return render(request, 'traveleverywhere/blogs.html', context=context_dict)
 
 def forum(request):
-    question_list = Question.objects.order_by('-replies')[:10]
+    question_list = Question.objects.all()
     context_dict = {}
-    context_dict['questions'] = question_list
+    quest_answ_count = []
+    for question in question_list:
+        answers = Answer.objects.filter(question=question).count()
+        quest_answ_count.append((question,answers))
+    context_dict['questions'] = quest_answ_count
     return render(request, 'traveleverywhere/forum.html', context=context_dict)
 
 def show_question(request, question_name_slug):
