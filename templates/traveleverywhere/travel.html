@@ -1,24 +1,48 @@
-<!DOCTYPE html>
 {% extends 'traveleverywhere/base.html' %}
 
 {% block title_block %}
-	Blogs - TravelEverywhere
+	Travel - TravelEverywhere
 {% endblock %}
 
-{% block topnav %}
-<div class="topnav">
-	<a href="/traveleverywhere/">TravelEverywhere</a>
-	<a href="/traveleverywhere/blogs">Blogs</a>
-	<a href="/traveleverywhere/forum">Forum</a>
-	<a class="active" href="/traveleverywhere/travel">Travel</a>
-	<div class="topnav-right">
-		<a href="/traveleverywhere/signup">Sign up</a>
-		<a href="/traveleverywhere/login">Login</a>
-	</div>
-</div>
-{% endblock %}
 	
 {% block body_block %}
-	<br>
-    (Travel content)
+<div>
+	{% if airlines %}
+		<ul>
+			{% for airline in airlines %}
+				<li>
+					<a href="{{ airline.link }}">{{airline.name}}</a>
+				</li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<strong>There are no airlines to show.</strong>
+	{% endif %}
+</div>
+<div>
+	{% if agencies %}
+		<ul>
+			{% for agency in agencies %}
+				<li>
+					<a href="{{ agency.link }}">{{agency.name}}</a>
+				</li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<strong>There are no agencies to show.</strong>
+	{% endif %}
+</div>
+<div>
+	{% if websites %}
+		<ul>
+			{% for website in websites %}
+				<li>
+					<a href="{{ website.link }}">{{website.name}}</a>
+				</li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<strong>There are no websites to show.</strong>
+	{% endif %}
+</div>
 {% endblock %}

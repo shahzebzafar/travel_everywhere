@@ -3,7 +3,7 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
 class Question(models.Model):
-    title = models.URLField(max_length = 50)
+    title = models.CharField(max_length = 50)
     body = models.CharField(max_length = 500)
     replies = models.IntegerField(default = 0)
     user = models.ForeignKey(User, on_delete = models.CASCADE, null=True)
@@ -28,7 +28,7 @@ class Answer(models.Model):
         return self.text
 
 class Blog(models.Model):
-    title = models.URLField(max_length = 50)
+    title = models.CharField(max_length = 50)
     body = models.CharField(max_length = 10000)
     likes = models.IntegerField(default = 0)
     publish_date = models.DateField(auto_now_add = True)
@@ -36,6 +36,7 @@ class Blog(models.Model):
     location_city = models.CharField(max_length = 20, blank = True)
     location_place = models.CharField(max_length = 50, blank = True)
     user = models.ForeignKey(User, on_delete = models.CASCADE, null=True)
+    slug = models.SlugField(max_length = 50, unique=True)
     
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
@@ -47,12 +48,14 @@ class Blog(models.Model):
     def __str__(self):
         return self.title
         
+def get_image_filename(instance, filename):
+    title = instance.blog.title
+    slug = slugify(title)
+    return "blog_images/%s-%s" % (slug, filename)
+
 class Blog_Image(models.Model):
-    image = models.ImageField(upload_to = 'blog_images', blank = True)
-    blog = models.ForeignKey(Blog, on_delete = models.CASCADE)
-    
-    def __str__(self):
-        return self.image
+    blog = models.ForeignKey(Blog, on_delete = models.CASCADE, default = None)
+    image = models.ImageField(upload_to = get_image_filename, verbose_name = "Image")
                 
 class User_Profile(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)

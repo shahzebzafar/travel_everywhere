@@ -8,15 +8,15 @@
 {% block body_block %}
 <h1>Sign up for TravelEverywhere</h1>
 {% if registered %}
-<strong>Thank you for signing up!</strong>
-<a href="{% url 'traveleverywhere:home' %}">Return to homepage.</a><br />
+    <strong>Thank you for signing up!</strong>
+    <a href="{% url 'traveleverywhere:home' %}">Return to homepage.</a><br />
 {% else %}
-<strong>Sign up here!</strong><br />
-<form id="user_form" method="post" action="{% url 'traveleverywhere:signup' %}" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ user_form.as_p }}
-    {{ profile_form.as_p }}
-    <input type="submit" name="submit" value="Sign up" />
-</form>
+    <strong>Sign up here!</strong><br />
+    <form id="user_form" method="post" action="{% url 'traveleverywhere:signup' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ user_form.as_p }}
+        {{ profile_form.as_p }}
+        <input type="submit" name="submit" value="Sign up" />
+    </form>
 {% endif %}
 {% endblock %}

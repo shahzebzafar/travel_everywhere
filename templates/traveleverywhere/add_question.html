@@ -1,0 +1,23 @@
+{% extends 'traveleverywhere/base.html' %}
+
+{% block title_block %}
+	TravelEverywhere
+{% endblock %}
+
+{% block body_block %}
+<h1>Add a question</h1>
+<div>
+    <form id='question_form' method='post' action="{% url 'traveleverywhere:add_question' %}">
+        {% csrf_token %}
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+        {% for field in form.visible_fields %}
+            {{ field.errors }}
+            {{ field.help_text }}
+            {{ field }}
+        {% endfor %}
+        <input type="submit" name="submit" value="Submit Question" />
+    </form>
+</div>
+{% endblock %}
