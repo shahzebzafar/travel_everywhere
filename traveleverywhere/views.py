@@ -6,9 +6,10 @@ from django.shortcuts import redirect
 from traveleverywhere.forms import UserForm, UserProfileForm, QuestionForm, AnswerForm, BlogForm, BlogImageForm
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
-from traveleverywhere.models import Question, Answer, Airline, Agency, BookingWebsite, Blog, Blog_Image
+from traveleverywhere.models import Question, Answer, Airline, Agency, BookingWebsite, Blog, Blog_Image, User_Profile
 from django.forms import modelformset_factory
 from django.contrib import messages
+from django.contrib.auth.models import User
 
 
 
@@ -53,7 +54,9 @@ def add_question(request):
     if request.method=='POST':
         form = QuestionForm(request.POST)
         if form.is_valid():
-            form.save(commit=True)
+            question = form.save(commit=False)
+            question.user = request.user
+            question.save()
             return redirect('/traveleverywhere/forum/')
         else:
             print(form.errors)
@@ -74,6 +77,7 @@ def add_answer(request, question_name_slug):
             if question:
                 answer = form.save(commit=False)
                 answer.question = question
+                answer.user = request.user
                 answer.save()
                 return redirect(reverse('traveleverywhere:show_question', kwargs={'question_name_slug':question_name_slug}))
         else:
