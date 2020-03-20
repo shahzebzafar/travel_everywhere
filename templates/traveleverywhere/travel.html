@@ -9,6 +9,7 @@
 <div>
 	{% if airlines %}
 		<ul>
+			<p>Top Airlines</p>
 			{% for airline in airlines %}
 				<li>
 					<a href="{{ airline.link }}">{{airline.name}}</a>
@@ -22,6 +23,7 @@
 <div>
 	{% if agencies %}
 		<ul>
+			<p>Top Agencies</p>
 			{% for agency in agencies %}
 				<li>
 					<a href="{{ agency.link }}">{{agency.name}}</a>
@@ -35,6 +37,7 @@
 <div>
 	{% if websites %}
 		<ul>
+			<p>Top Booking websites</p>
 			{% for website in websites %}
 				<li>
 					<a href="{{ website.link }}">{{website.name}}</a>
