@@ -12,9 +12,10 @@
 		{% endif %}
 		{% if blogs %}
 			<ul>
-				{% for blog in blogs %}
+				{% for blog, blogSummary in blogs %}
 				<li>
 					<a href="{% url 'traveleverywhere:show_blog' blog.slug %}">{{ blog.title }}</a>
+					<p>{{ blogSummary }}</p>
 				</li>
 				{% endfor %}
 			</ul>

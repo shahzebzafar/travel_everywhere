@@ -15,5 +15,6 @@ urlpatterns = [
     path('forum/show_question/<slug:question_name_slug>/', views.show_question, name = 'show_question'),
     path('forum/show_question/<slug:question_name_slug>/add_answer/', views.add_answer, name="add_answer"),
     path('blogs/add_blog/', views.add_blog, name = 'add_blog'),
-    path('blogs/<slug:blog_name_slug>/', views.show_blog, name = 'show_blog'),
+    path('blogs/show_blog/<slug:blog_name_slug>/', views.show_blog, name = 'show_blog'),
+    path('blogs/show_blog/<slug:blog_name_slug>/add_image/', views.add_image, name="add_image"),
 ]

@@ -12,7 +12,6 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 
 
-
 def home(request):
     context_dict = {}
     visitor_cookie_handler(request)
@@ -21,37 +20,72 @@ def home(request):
     return response
 
 @login_required
-def add_blog(request, blog_name_slug):
-    BlogImages = modelformset_factory(Blog_Image, form = BlogImageForm, extra = 10)
-    if request.method == 'POST':
-        blog_form = BlogForm(request.POST)
-        images_set = BlogImages(request.POST, request.FILES, queryset = Blog_Image.objects.none())
-        if blog_form.is_valid() and images_set.is_valid():
-            blog = blog_form.save(commit = False)
+def add_blog(request):
+    form = BlogForm()
+    if request.method=='POST':
+        form = BlogForm(request.POST)
+        if form.is_valid():
+            blog = form.save(commit=False)
             blog.user = request.user
             blog.bodySummary = blog.body[:200]
+            # blog.publish_date = datetime.datetime.now()
             blog.save()
-            for im in images_set.cleaned_data:
-                if im:
-                    image = im['image']
-                    picture = Blog_Image(add_blog = blog, image = image)
-                    picture.save()
-            return redirect(reverse('rango:show_blog', kwargs={'category_name_slug': category_name_slug}))
+            return redirect('/traveleverywhere/blogs/')
         else:
-            print(blog_form.errors, images_set.errors)
-    else:
-        blog_form = BlogForm()
-        images_set = BlogImages(queryset = Blog_Image.objects.none())
-        context_dict['blog'] = blog_form
-        context_dict['images'] = images_set
-        return render(request, 'traveleverywhere/add_blog.html', context=context_dict)
+            print(form.errors)
+    return render(request, 'traveleverywhere/add_blog.html', {'form':form})
+    # BlogImages = modelformset_factory(Blog_Image, form = BlogImageForm, extra = 10)
+    # if request.method == 'POST':
+    #     blog_form = BlogForm(request.POST)
+    #     images_set = BlogImages(request.POST, request.FILES, queryset = Blog_Image.objects.none())
+    #     if blog_form.is_valid() and images_set.is_valid():
+    #         blog = blog_form.save(commit = False)
+    #         blog.user = request.user
+    #         blog.bodySummary = blog.body[:200]
+    #         blog.save()
+    #         for im in images_set.cleaned_data:
+    #             if im:
+    #                 image = im['image']
+    #                 picture = Blog_Image(add_blog = blog, image = image)
+    #                 picture.save()
+    #         return redirect(reverse('traveleverywhere:blogs', kwargs={'category_name_slug': category_name_slug}))
+    #     else:
+    #         print(blog_form.errors, images_set.errors)
+    # else:
+    #     blog_form = BlogForm()
+    #     images_set = BlogImages(queryset = Blog_Image.objects.none())
+    #     context_dict['blog'] = blog_form
+    #     context_dict['images'] = images_set
+    #     return render(request, 'traveleverywhere/add_blog.html', context=context_dict)
+
+@login_required
+def add_image(request, blog_name_slug):
+    try:
+        blog = Blog.objects.get(slug=blog_name_slug)
+    except Blog.DoesNotExist:
+        blog = None
+    if blog is None:
+        return redirect('/traveleverywhere/blogs/')
+    form = BlogImageForm()
+    if request.method=='POST':
+        form = BlogImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            if blog:
+                image = form.save(commit=False)
+                image.blog = blog
+                answer.save()
+                return redirect(reverse('traveleverywhere:show_blog', kwargs={'blog_name_slug':blog_name_slug}))
+        else:
+            print(form.errors)
+    context_dict = {'form' : form, 'blog' : blog}
+    return render(request, 'traveleverywhere/add_image.html', context=context_dict)
         
 def blogs(request):
     blogs_list = Blog.objects.all()
     context_dict = {}
     blogs = []
     for blog in blogs_list:
-        blogSummary = Blog.objects.get(bodySummary)
+        blogSummary = blog.bodySummary
         blogs.append((blog, blogSummary))
     context_dict['blogs'] = blogs
     return render(request, 'traveleverywhere/blogs.html', context = context_dict)
@@ -66,7 +100,7 @@ def show_blog(request, blog_name_slug):
     except Blog.DoesNotExist:
         context_dict['blog'] = None
         context_dict['images'] = None
-    return render(request, 'traveleverywhere/blogs.html', context = context_dict)
+    return render(request, 'traveleverywhere/show_blog.html', context = context_dict)
     
 
 def forum(request):

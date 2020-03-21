@@ -30,7 +30,7 @@ class AnswerForm(forms.ModelForm):
         fields = ('text',)
 
 class BlogForm(forms.ModelForm):
-    title = forms.URLField(max_length = 50, help_text = "Title of the blog.")
+    title = forms.CharField(max_length = 50, help_text = "Title of the blog.")
     body = forms.CharField(widget = forms.Textarea, max_length = 10000, help_text = "Contents of the blog.")
     bodySummary = forms.CharField(widget=forms.HiddenInput(), required = False)
     likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)

@@ -1,0 +1,23 @@
+{% extends 'traveleverywhere/base.html' %}
+
+{% block title_block %}
+	TravelEverywhere
+{% endblock %}
+
+{% block body_block %}
+<h1>Add an image to {{ question.title }}</h1>
+<div>
+    <form id="add_answer_form" method='post' action="{% url 'traveleverywhere:add_image' question.slug %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+        {% for field in form.visible_fields %}
+            {{ field.errors }}
+            {{ field.help_text }}
+            {{ field }}
+        {% endfor %}
+        <input type='submit' name='submit' value='Upload' />
+    </form>
+</div>
+{% endblock %}
