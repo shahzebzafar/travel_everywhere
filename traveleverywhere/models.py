@@ -29,6 +29,7 @@ class Answer(models.Model):
 class Blog(models.Model):
     title = models.CharField(max_length = 50)
     body = models.CharField(max_length = 10000)
+    bodySummary = models.CharField(max_length = 200)
     likes = models.IntegerField(default = 0)
     publish_date = models.DateField(auto_now_add = True)
     location_country = models.CharField(max_length = 20)
@@ -52,10 +53,6 @@ def get_image_filename(instance, filename):
     slug = slugify(title)
     return "blog_images/%s-%s" % (slug, filename) 
         
-def get_image_filename(instance, filename):
-    title = instance.blog.title
-    slug = slugify(title)
-    return "blog_images/%s-%s" % (slug, filename)
 
 class Blog_Image(models.Model):
     blog = models.ForeignKey(Blog, on_delete = models.CASCADE, default = None)

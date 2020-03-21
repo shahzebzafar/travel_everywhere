@@ -4,21 +4,22 @@
 {% block title_block %}
 	Blogs - TravelEverywhere
 {% endblock %}
-
-{% block topnav %}
-<div class="topnav">
-	<a href="/traveleverywhere/">TravelEverywhere</a>
-	<a class="active" href="/traveleverywhere/blogs">Blogs</a>
-	<a href="/traveleverywhere/forum">Forum</a>
-	<a href="/traveleverywhere/travel">Travel</a>
-	<div class="topnav-right">
-		<a href="/traveleverywhere/signup">Sign up</a>
-		<a href="/traveleverywhere/login">Login</a>
-	</div>
-</div>
-{% endblock %}
 	
 {% block body_block %}
-	<br>
-    (Blog content)
+	<div>
+		{% if user.is_authenticated %}
+			<a href="{% url 'traveleverywhere:add_blog'%}">Create a new blog</a><br />
+		{% endif %}
+		{% if blogs %}
+			<ul>
+				{% for blog in blogs %}
+				<li>
+					<a href="{% url 'traveleverywhere:show_blog' blog.slug %}">{{ blog.title }}</a>
+				</li>
+				{% endfor %}
+			</ul>
+		{% else %}
+			<strong>There are no blogs posted.</strong>
+		{% endif %}
+	</div>
 {% endblock %}
