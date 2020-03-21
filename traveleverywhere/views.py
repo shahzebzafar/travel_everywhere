@@ -68,12 +68,12 @@ def add_image(request, blog_name_slug):
         return redirect('/traveleverywhere/blogs/')
     form = BlogImageForm()
     if request.method=='POST':
-        form = BlogImageForm(request.POST)
+        form = BlogImageForm(request.POST, request.FILES)
         if form.is_valid():
             if blog:
                 image = form.save(commit=False)
                 image.blog = blog
-                answer.save()
+                image.save()
                 return redirect(reverse('traveleverywhere:show_blog', kwargs={'blog_name_slug':blog_name_slug}))
         else:
             print(form.errors)
