@@ -57,6 +57,7 @@ body {
 	<div class="topnav-right">
 		{% if user.is_authenticated %}
 			<a href="{% url 'traveleverywhere:logout' %}">Logout</a>
+			<a href="{% url 'traveleverywhere:my_account' user.username %}">My Account</a>
 		{% else %}
 			<a href="{% url 'traveleverywhere:signup' %}">Sign up</a>
 			<a href="{% url 'traveleverywhere:login' %}">Login</a>

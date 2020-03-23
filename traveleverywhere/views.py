@@ -10,6 +10,8 @@ from traveleverywhere.models import Question, Answer, Airline, Agency, BookingWe
 from django.forms import modelformset_factory
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.views import View
+from django.utils.decorators import method_decorator
 
 
 def home(request):
@@ -234,6 +236,42 @@ def visitor_cookie_handler(request):
     else:
         request.session['last_visit'] = last_visit_cookie
     request.session['visits'] = visits
+
+class MyAccountView(View):
+    def get_user_details(self, username):
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return None
+        user_profile = User_Profile.objects.get_or_create(user=user)[0]
+        form = UserProfileForm({'about':user_profile.about, 'picture':user_profile.picture})
+        return (user, user_profile, form)
+    
+    @method_decorator(login_required) 
+    def get(self, request, username): 
+        try: 
+            (user, user_profile, form) = self.get_user_details(username) 
+        except TypeError: 
+            return redirect(reverse('traveleverywhere:home'))
+        context_dict = {'user_profile': user_profile, 'selected_user': user, 'form': form}
+        return render(request, 'traveleverywhere/my_account.html', context_dict)
+
+    @method_decorator(login_required) 
+    def post(self, request, username): 
+        try: 
+            (user, user_profile, form) = self.get_user_details(username) 
+        except TypeError: 
+            return redirect(reverse('traveleverywhere:home'))
+        form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+        if form.is_valid(): 
+            form.save(commit=True) 
+            return redirect('traveleverywhere:my_account', user.username) 
+        else: 
+            print(form.errors)
+        context_dict = {'user_profile': user_profile, 'selected_user': user, 'form': form}
+        return render(request, 'traveleverywhere/my_account.html', context_dict)
+
+
 
 
 	

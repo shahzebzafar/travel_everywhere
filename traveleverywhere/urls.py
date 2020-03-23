@@ -1,5 +1,6 @@
 from django.urls import path
 from traveleverywhere import views
+from traveleverywhere.views import MyAccountView
 
 app_name = "traveleverywhere"
 
@@ -17,4 +18,5 @@ urlpatterns = [
     path('blogs/add_blog/', views.add_blog, name = 'add_blog'),
     path('blogs/show_blog/<slug:blog_name_slug>/', views.show_blog, name = 'show_blog'),
     path('blogs/show_blog/<slug:blog_name_slug>/add_image/', views.add_image, name="add_image"),
+    path('my_account/<username>/', views.MyAccountView.as_view(), name='my_account'),
 ]
