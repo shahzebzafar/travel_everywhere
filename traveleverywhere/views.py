@@ -166,7 +166,7 @@ def add_answer(request, question_name_slug):
 
 def travel(request):
     context_dict = {}
-    airline_list = Airline.objects.order_by('-rating')[:10]
+    airline_list = Airline.objects.all()
     agency_list = Agency.objects.order_by('-rating')[:10]
     website_list = BookingWebsite.objects.order_by('-rating')[:10]
     context_dict['airlines'] = airline_list

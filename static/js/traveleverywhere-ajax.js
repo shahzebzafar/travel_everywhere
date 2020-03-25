@@ -9,5 +9,11 @@ $(document).ready(function() {
                 $('#like_btn').hide();
             })
     });
+    $('#airline').DataTable();
 });
+
+function computeRating(likes, dislikes){
+    rating = (likes/(likes+dislikes))*5;
+    return rating;
+}
     

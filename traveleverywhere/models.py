@@ -69,7 +69,8 @@ class User_Profile(models.Model):
 class Airline(models.Model):
     name = models.CharField(max_length=20)
     link = models.URLField(max_length=30)
-    rating = models.IntegerField(default=0)
+    likes = models.IntegerField(default=0)
+    dislikes = models.IntegerField(default=0)
     user = models.ManyToManyField(User)
 
     def __str__(self):

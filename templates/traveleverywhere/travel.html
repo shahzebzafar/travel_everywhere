@@ -10,11 +10,27 @@
 	{% if airlines %}
 		<ul>
 			<p>Top Airlines</p>
-			{% for airline in airlines %}
-				<li>
-					<a href="{{ airline.link }}">{{airline.name}}</a>
-				</li>
-			{% endfor %}
+			<table id="airline" class="table table-striped table-bordered" style="width:30%">
+				<thead>
+					<tr>
+						<th>Airline</th>
+						<th>Rating</th>
+						<!-- <th>Like</th>
+						<th>Dislike</th> -->
+					</tr>
+				</thead>
+				<tbody>
+					{% for airline in airlines %}
+						<tr>
+							<td><a href="{{ airline.link }}">{{airline.name}}</a></td>
+							<td>5</td>
+							<!-- <td><script>computeRating(airline.likes, airline.dislikes)</script></td> -->
+							<!-- <td></td> -->
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			
 		</ul>
 	{% else %}
 		<strong>There are no airlines to show.</strong>

@@ -24,10 +24,10 @@ def populate():
     }
 
     airlines = [
-        {'name': 'Ryanair', 'link' : 'https://www.ryanair.com/', 'rating' : 90},
-        {'name':'EasyJet', 'link':'https://www.easyjet.com/', 'rating':80},
-        {'name': 'Qatar', 'link':'https://www.qatarairways.com/', 'rating': 56},
-        {'name': 'British Airways', 'link':'https://www.britishairways.com/', 'rating':40},
+        {'name': 'Ryanair', 'link' : 'https://www.ryanair.com/'},
+        {'name':'EasyJet', 'link':'https://www.easyjet.com/'},
+        {'name': 'Qatar', 'link':'https://www.qatarairways.com/'},
+        {'name': 'British Airways', 'link':'https://www.britishairways.com/'},
     ]
 
     agencies = [
@@ -52,7 +52,7 @@ def populate():
             add_answer(q, answ['text'],user2)
     
     for air in airlines:
-        add_airline(air['name'],air['link'],air['rating'])
+        add_airline(air['name'],air['link'])
 
     for agency in agencies:
         add_agency(agency['name'],agency['link'],agency['rating'])
@@ -87,8 +87,8 @@ def add_answer(quest, text, user):
     a.save()
     return a
 
-def add_airline(name,link,rating=0):
-    air=Airline.objects.get_or_create(name=name, link=link, rating=rating)[0]
+def add_airline(name,link):
+    air=Airline.objects.get_or_create(name=name, link=link)[0]
     air.save()
     return air
 
