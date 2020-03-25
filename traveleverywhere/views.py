@@ -271,6 +271,22 @@ class MyAccountView(View):
         context_dict = {'user_profile': user_profile, 'selected_user': user, 'form': form}
         return render(request, 'traveleverywhere/my_account.html', context_dict)
 
+class LikeBLogView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        blog_id = request.GET['blog_id']
+        try:
+            blog = Blog.objects.get(id=int(blog_id))
+        except Blog.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+        blog.likes = blog.likes + 1
+        blog.save()
+        return HttpResponse(blog.likes)
+
+
+
 
 
 
