@@ -31,17 +31,17 @@ def populate():
     ]
 
     agencies = [
-        {'name': 'LoveHolidays', 'link' : 'https://www.loveholidays.com/', 'rating' : 55},
-        {'name':'FlightCenter', 'link':'https://www.flightcentre.co.uk/', 'rating':46},
-        {'name': 'AppleHouseTravel', 'link':'https://www.applehousetravel.co.uk/', 'rating': 40},
-        {'name': 'Tui', 'link':'https://www.tui.co.uk/', 'rating':25},
+        {'name': 'LoveHolidays', 'link' : 'https://www.loveholidays.com/'},
+        {'name':'FlightCenter', 'link':'https://www.flightcentre.co.uk/'},
+        {'name': 'AppleHouseTravel', 'link':'https://www.applehousetravel.co.uk/'},
+        {'name': 'Tui', 'link':'https://www.tui.co.uk/'},
     ]
 
     websites = [
-        {'name': 'Trivago', 'link' : 'https://www.trivago.co.uk/', 'rating' : 60},
-        {'name':'Expedia', 'link':'https://www.expedia.co.uk/', 'rating':49},
-        {'name': 'Booking', 'link':'https://www.booking.com/', 'rating': 40},
-        {'name': 'AirBnB', 'link':'https://www.airbnb.co.uk/', 'rating':36},
+        {'name': 'Trivago', 'link' : 'https://www.trivago.co.uk/'},
+        {'name':'Expedia', 'link':'https://www.expedia.co.uk/'},
+        {'name': 'Booking', 'link':'https://www.booking.com/'},
+        {'name': 'AirBnB', 'link':'https://www.airbnb.co.uk/'},
     ]
 
     user1 = add_user('zdravko','travel123')
@@ -55,10 +55,10 @@ def populate():
         add_airline(air['name'],air['link'])
 
     for agency in agencies:
-        add_agency(agency['name'],agency['link'],agency['rating'])
+        add_agency(agency['name'],agency['link'])
 
     for web in websites:
-        add_website(web['name'],web['link'],web['rating'])
+        add_website(web['name'],web['link'])
 
     for q in Question.objects.all():
         for a in Answer.objects.filter(question=q):
@@ -92,13 +92,13 @@ def add_airline(name,link):
     air.save()
     return air
 
-def add_agency(name,link,rating=0):
-    agency=Agency.objects.get_or_create(name=name, link=link, rating=rating)[0]
+def add_agency(name,link):
+    agency=Agency.objects.get_or_create(name=name, link=link)[0]
     agency.save()
     return agency
 
-def add_website(name,link,rating=0):
-    website=BookingWebsite.objects.get_or_create(name=name, link=link,rating=rating)[0]
+def add_website(name,link):
+    website=BookingWebsite.objects.get_or_create(name=name, link=link)[0]
     website.save()
     return website
 

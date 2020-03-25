@@ -10,6 +10,8 @@ $(document).ready(function() {
             })
     });
     $('#airline').DataTable();
+    $('#agency').DataTable();
+    $('#website').DataTable();
 });
 
 function computeRating(likes, dislikes){
