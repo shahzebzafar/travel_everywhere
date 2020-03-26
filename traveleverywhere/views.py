@@ -287,8 +287,8 @@ class LikeBLogView(View):
 
 class LikeAirline(View):
     @method_decorator(login_required)
-    def get(self, request):
-        airline_id = request.GET['airline_id']
+    def post(self, request):
+        airline_id = request.POST['airline_id']
         try:
             airline = Airline.objects.get(id=int(airline_id))
         except Airline.DoesNotExist:

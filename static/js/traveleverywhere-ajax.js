@@ -9,15 +9,17 @@ $(document).ready(function() {
                 $('#like_btn').hide();
             })
     });
-    $('#like').click(function() {
+    $('#airline .like').click(function() {
         var airlineIdVar;
         airlineIdVar = $(this).attr('data-airlineid');
         airlineNameVar = $(this).attr('data-airlinename');
-        $.get('/traveleverywhere/like/',
-            {'airline_id':airlineIdVar},
+        $.post('/traveleverywhere/like/',
+            {'airline_id':airlineIdVar,
+                'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
             function(data) {
-                $('#like_count').html(data);
-                $('#like').hide();
+                console.log(airlineIdVar)
+                $("#airline strong[data-airlineid='"+airlineIdVar+"'].like_count").html(data);
+                $("#airline button[data-airlineid='"+airlineIdVar+"'].like").hide();
             })
     });
     $('#airline').DataTable();

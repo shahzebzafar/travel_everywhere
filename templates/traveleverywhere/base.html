@@ -9,7 +9,6 @@
 				TravelEverywhere
 			{% endblock %}
 		</title>
-		<head>
 
 <style>
 body {
@@ -48,7 +47,7 @@ body {
 </head>
 
 <body>
-
+{% csrf_token %}
 {% block topnav %}
 <div class="topnav">
 	<a href="{% url 'traveleverywhere:home' %}">TravelEverywhere</a>
