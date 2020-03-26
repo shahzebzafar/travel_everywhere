@@ -9,13 +9,25 @@ $(document).ready(function() {
                 $('#like_btn').hide();
             })
     });
+    $('#like').click(function() {
+        var airlineIdVar;
+        airlineIdVar = $(this).attr('data-airlineid');
+        airlineNameVar = $(this).attr('data-airlinename');
+        $.get('/traveleverywhere/like/',
+            {'airline_id':airlineIdVar},
+            function(data) {
+                $('#like_count').html(data);
+                $('#like').hide();
+            })
+    });
     $('#airline').DataTable();
     $('#agency').DataTable();
     $('#website').DataTable();
-});
 
+});
 function computeRating(likes, dislikes){
-    rating = (likes/(likes+dislikes))*5;
-    return rating;
+    return (likes/(likes+dislikes))*5;
 }
+
+
     

@@ -285,6 +285,20 @@ class LikeBLogView(View):
         blog.save()
         return HttpResponse(blog.likes)
 
+class LikeAirline(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        airline_id = request.GET['airline_id']
+        try:
+            airline = Airline.objects.get(id=int(airline_id))
+        except Airline.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+        airline.likes = airline.likes + 1
+        airline.save()
+        return HttpResponse(airline.likes)
+
 
 
 
