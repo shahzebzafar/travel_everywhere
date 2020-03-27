@@ -164,14 +164,29 @@ def add_answer(request, question_name_slug):
     context_dict = {'form' : form, 'question' : question}
     return render(request, 'traveleverywhere/add_answer.html', context=context_dict)
 
+def find_rating(likes, dislikes):
+    return round((likes/(likes+dislikes))*5, 2)
+
 def travel(request):
     context_dict = {}
     airline_list = Airline.objects.all()
+    airline_rating_track = []
+    for airline in airline_list:
+        rating = find_rating(airline.likes, airline.dislikes)
+        airline_rating_track.append((airline, rating))
     agency_list = Agency.objects.all()
+    agency_rating_track = []
+    for agency in agency_list:
+        rating = find_rating(agency.likes, agency.dislikes)
+        agency_rating_track.append((agency, rating))
     website_list = BookingWebsite.objects.all()
-    context_dict['airlines'] = airline_list
-    context_dict['agencies'] = agency_list
-    context_dict['websites'] = website_list
+    website_rating_track = []
+    for website in website_list:
+        rating = find_rating(website.likes, website.dislikes)
+        website_rating_track.append((website, rating))
+    context_dict['airlines'] = airline_rating_track
+    context_dict['agencies'] = agency_rating_track
+    context_dict['websites'] = website_rating_track
     return render(request, 'traveleverywhere/travel.html', context=context_dict)
 	
 def user_login(request):
