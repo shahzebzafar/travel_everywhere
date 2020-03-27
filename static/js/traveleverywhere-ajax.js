@@ -16,7 +16,7 @@ $(document).ready(function() {
             {'airline_id':airlineIdVar,
                 'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
             function(data) {
-                $("#airline strong[data-airlineid='"+airlineIdVar+"'].like_count").html(data);
+                $("#airline strong[data-airlineid='"+airlineIdVar+"'].rating_airline").html(data);
                 $("#airline button[data-airlineid='"+airlineIdVar+"'].like").hide();
             })
     });
@@ -27,7 +27,7 @@ $(document).ready(function() {
             {'airline_id':airlineIdVar,
                 'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
             function(data) {
-                $("#airline strong[data-airlineid='"+airlineIdVar+"'].dislike_count").html(data);
+                $("#airline strong[data-airlineid='"+airlineIdVar+"'].rating_airline").html(data);
                 $("#airline button[data-airlineid='"+airlineIdVar+"'].dislike").hide();
             })
     });
@@ -38,7 +38,7 @@ $(document).ready(function() {
             {'agency_id':agencyIdVar,
                 'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
             function(data) {
-                $("#agency strong[data-agencyid='"+agencyIdVar+"'].like_count").html(data);
+                $("#agency strong[data-agencyid='"+agencyIdVar+"'].rating_agency").html(data);
                 $("#agency button[data-agencyid='"+agencyIdVar+"'].like").hide();
             })
     });
@@ -49,7 +49,7 @@ $(document).ready(function() {
             {'agency_id':agencyIdVar,
                 'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
             function(data) {
-                $("#agency strong[data-agencyid='"+agencyIdVar+"'].dislike_count").html(data);
+                $("#agency strong[data-agencyid='"+agencyIdVar+"'].rating_agency").html(data);
                 $("#agency button[data-agencyid='"+agencyIdVar+"'].dislike").hide();
             })
     });
@@ -60,7 +60,7 @@ $(document).ready(function() {
             {'website_id':websiteIdVar,
                 'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
             function(data) {
-                $("#website strong[data-websiteid='"+websiteIdVar+"'].like_count").html(data);
+                $("#website strong[data-websiteid='"+websiteIdVar+"'].rating_website").html(data);
                 $("#website button[data-websiteid='"+websiteIdVar+"'].like").hide();
             })
     });
@@ -71,7 +71,7 @@ $(document).ready(function() {
             {'website_id':websiteIdVar,
                 'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
             function(data) {
-                $("#website strong[data-websiteid='"+websiteIdVar+"'].dislike_count").html(data);
+                $("#website strong[data-websiteid='"+websiteIdVar+"'].rating_website").html(data);
                 $("#website button[data-websiteid='"+websiteIdVar+"'].dislike").hide();
             })
     });
@@ -80,9 +80,6 @@ $(document).ready(function() {
     $('#website').DataTable();
 
 });
-function computeRating(likes, dislikes){
-    return (likes/(likes+dislikes))*5;
-}
 
 
     

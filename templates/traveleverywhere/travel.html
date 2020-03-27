@@ -26,17 +26,15 @@
 						{% for airline,rating in airlines %}
 							<tr>
 								<td><a href="{{ airline.link }}">{{airline.name}}</a></td>
-								<td >{{ rating }} /5</td>
+								<td ><strong class="rating_airline" data-airlineid="{{ airline.id }}">{{ rating }}</strong>/5</td>
 								{% if user.is_authenticated %}
 									<td>
-										<strong class="like_count" data-airlineid="{{ airline.id }}">{{ airline.likes }}</strong> likes
 										<button class="like" data-airlineid="{{ airline.id }}" class="btn btn-primary btn-sm" type="button">
 											<span data-feather="thumbs-up"></span>
 											Like
 										</button>
 									</td>
 									<td>
-										<strong class="dislike_count" data-airlineid="{{ airline.id }}">{{ airline.dislikes }}</strong> dislikes
 										<button class="dislike" data-airlineid="{{ airline.id }}" class="btn btn-primary btn-sm" type="button">
 											<span data-feather="thumbs-down"></span>
 											Dislike
@@ -69,17 +67,15 @@
 						{% for agency,rating in agencies %}
 							<tr>
 								<td><a href="{{ agency.link }}">{{agency.name}}</a></td>
-								<td>{{ rating }} /5</td>
+								<td ><strong class="rating_agency" data-agencyid="{{ agency.id }}">{{ rating }}</strong>/5</td>
 								{% if user.is_authenticated %}
 									<td>
-										<strong class="like_count" data-agencyid="{{ agency.id }}">{{ agency.likes }}</strong> likes
 										<button class="like" data-agencyid="{{ agency.id }}" class="btn btn-primary btn-sm" type="button">
 											<span data-feather="thumbs-up"></span>
 											Like
 										</button>
 									</td>
 									<td>
-										<strong class="dislike_count" data-agencyid="{{ agency.id }}">{{ agency.dislikes }}</strong> dislikes
 										<button class="dislike" data-agencyid="{{ agency.id }}" class="btn btn-primary btn-sm" type="button">
 											<span data-feather="thumbs-down"></span>
 											Dislike
@@ -112,17 +108,15 @@
 						{% for website,rating in websites %}
 							<tr>
 								<td><a href="{{ website.link }}">{{website.name}}</a></td>
-								<td>{{ rating }} /5</td>
+								<td ><strong class="rating_website" data-websiteid="{{ website.id }}">{{ rating }}</strong>/5</td>
 								{% if user.is_authenticated %}
 									<td>
-										<strong class="like_count" data-websiteid="{{ website.id }}">{{ website.likes }}</strong> likes
 										<button class="like" data-websiteid="{{ website.id }}" class="btn btn-primary btn-sm" type="button">
 											<span data-feather="thumbs-up"></span>
 											Like
 										</button>
 									</td>
 									<td>
-										<strong class="dislike_count" data-websiteid="{{ website.id }}">{{ website.dislikes }}</strong> dislikes
 										<button class="dislike" data-websiteid="{{ website.id }}" class="btn btn-primary btn-sm" type="button">
 											<span data-feather="thumbs-down"></span>
 											Dislike

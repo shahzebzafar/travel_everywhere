@@ -312,7 +312,7 @@ class LikeAirline(View):
             return HttpResponse(-1)
         airline.likes = airline.likes + 1
         airline.save()
-        return HttpResponse(airline.likes)
+        return HttpResponse(find_rating(airline.likes, airline.dislikes))
 
 class DislikeAirline(View):
     @method_decorator(login_required)
@@ -326,7 +326,7 @@ class DislikeAirline(View):
             return HttpResponse(-1)
         airline.dislikes = airline.dislikes + 1
         airline.save()
-        return HttpResponse(airline.dislikes)
+        return HttpResponse(find_rating(airline.likes, airline.dislikes))
 
 class LikeAgency(View):
     @method_decorator(login_required)
@@ -340,7 +340,7 @@ class LikeAgency(View):
             return HttpResponse(-1)
         agency.likes = agency.likes + 1
         agency.save()
-        return HttpResponse(agency.likes)
+        return HttpResponse(find_rating(agency.likes, agency.dislikes))
 
 class DislikeAgency(View):
     @method_decorator(login_required)
@@ -354,7 +354,7 @@ class DislikeAgency(View):
             return HttpResponse(-1)
         agency.dislikes = agency.dislikes + 1
         agency.save()
-        return HttpResponse(agency.dislikes)
+        return HttpResponse(find_rating(agency.likes, agency.dislikes))
 
 class LikeWebsite(View):
     @method_decorator(login_required)
@@ -368,7 +368,7 @@ class LikeWebsite(View):
             return HttpResponse(-1)
         website.likes = website.likes + 1
         website.save()
-        return HttpResponse(website.likes)
+        return HttpResponse(find_rating(website.likes, website.dislikes))
 
 class DislikeWebsite(View):
     @method_decorator(login_required)
@@ -382,7 +382,7 @@ class DislikeWebsite(View):
             return HttpResponse(-1)
         website.dislikes = website.dislikes + 1
         website.save()
-        return HttpResponse(website.dislikes)
+        return HttpResponse(find_rating(website.likes, website.dislikes))
 
 
 
