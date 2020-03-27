@@ -80,7 +80,13 @@
 											Like
 										</button>
 									</td>
-									<td></td>
+									<td>
+										<strong class="dislike_count" data-agencyid="{{ agency.id }}">{{ agency.dislikes }}</strong> dislikes
+										<button class="dislike" data-agencyid="{{ agency.id }}" class="btn btn-primary btn-sm" type="button">
+											<span data-feather="thumbs-down"></span>
+											Dislike
+										</button>
+									</td>
 								{% endif %}
 							</tr>
 						{% endfor %}
@@ -118,7 +124,13 @@
 											Like
 										</button>
 									</td>
-									<td></td>
+									<td>
+										<strong class="dislike_count" data-websiteid="{{ website.id }}">{{ website.dislikes }}</strong> dislikes
+										<button class="dislike" data-websiteid="{{ website.id }}" class="btn btn-primary btn-sm" type="button">
+											<span data-feather="thumbs-down"></span>
+											Dislike
+										</button>
+									</td>
 								{% endif %}
 							</tr>
 						{% endfor %}

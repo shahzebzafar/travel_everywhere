@@ -327,6 +327,20 @@ class LikeAgency(View):
         agency.save()
         return HttpResponse(agency.likes)
 
+class DislikeAgency(View):
+    @method_decorator(login_required)
+    def post(self, request):
+        agency_id = request.POST['agency_id']
+        try:
+            agency = Agency.objects.get(id=int(agency_id))
+        except Agency.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+        agency.dislikes = agency.dislikes + 1
+        agency.save()
+        return HttpResponse(agency.dislikes)
+
 class LikeWebsite(View):
     @method_decorator(login_required)
     def post(self, request):
@@ -340,6 +354,20 @@ class LikeWebsite(View):
         website.likes = website.likes + 1
         website.save()
         return HttpResponse(website.likes)
+
+class DislikeWebsite(View):
+    @method_decorator(login_required)
+    def post(self, request):
+        website_id = request.POST['website_id']
+        try:
+            website = BookingWebsite.objects.get(id=int(website_id))
+        except BookingWebsite.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+        website.dislikes = website.dislikes + 1
+        website.save()
+        return HttpResponse(website.dislikes)
 
 
 
