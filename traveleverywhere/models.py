@@ -69,12 +69,17 @@ class User_Profile(models.Model):
 class Airline(models.Model):
     name = models.CharField(max_length=20)
     link = models.URLField(max_length=30)
-    likes = models.IntegerField(default=0)
-    dislikes = models.IntegerField(default=0)
-    user = models.ManyToManyField(User)
 
     def __str__(self):
         return self.name
+
+class AirlineLike(models.Model):
+    airline = models.ForeignKey(Airline, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE, null=True)
+
+class AirlineDislike(models.Model):
+    airline = models.ForeignKey(Airline, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE, null=True)
 
 class Agency(models.Model):
     name = models.CharField(max_length=20)

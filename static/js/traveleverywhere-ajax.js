@@ -17,7 +17,8 @@ $(document).ready(function() {
                 'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
             function(data) {
                 $("#airline strong[data-airlineid='"+airlineIdVar+"'].rating_airline").html(data);
-                $("#airline button[data-airlineid='"+airlineIdVar+"'].like").hide();
+                $("#airline button[data-airlineid='"+airlineIdVar+"'].like").addClass("disabled");
+                $("#airline button[data-airlineid='"+airlineIdVar+"'].dislike").removeClass("disabled");
             })
     });
     $('#airline .dislike').click(function() {
@@ -28,7 +29,8 @@ $(document).ready(function() {
                 'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
             function(data) {
                 $("#airline strong[data-airlineid='"+airlineIdVar+"'].rating_airline").html(data);
-                $("#airline button[data-airlineid='"+airlineIdVar+"'].dislike").hide();
+                $("#airline button[data-airlineid='"+airlineIdVar+"'].dislike").addClass("disabled");
+                $("#airline button[data-airlineid='"+airlineIdVar+"'].like").removeClass("disabled");
             })
     });
     $('#agency .like').click(function() {

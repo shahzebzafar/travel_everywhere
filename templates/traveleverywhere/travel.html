@@ -24,22 +24,28 @@
 							</tr>
 						</thead>
 						<tbody>
-							{% for airline,rating in airlines %}
+							{% for airline,rating,liked_bool,disliked_bool in airlines %}
 								<tr>
 									<td><a href="{{ airline.link }}">{{airline.name}}</a></td>
 									<td ><strong class="rating_airline" data-airlineid="{{ airline.id }}">{{ rating }}</strong>/5</td>
 									{% if user.is_authenticated %}
 										<td>
-											<button data-airlineid="{{ airline.id }}" class="like btn btn-success btn-sm" type="button">
-												<span data-feather="thumbs-up"></span>
+											
+											<button data-airlineid="{{ airline.id }}" 
+												class="like btn btn-success btn-sm {% if liked_bool %} disabled {% endif %}" 
+												type="button">
 												Like
 											</button>
+											
 										</td>
 										<td>
-											<button data-airlineid="{{ airline.id }}" class="dislike btn btn-danger btn-sm" type="button">
-												<span data-feather="thumbs-down"></span>
+											
+											<button data-airlineid="{{ airline.id }}" 
+												class="dislike btn btn-danger btn-sm {% if disliked_bool %} disabled {% endif %}" 
+												type="button">
 												Dislike
 											</button>
+											
 										</td>
 									{% endif %}
 								</tr>

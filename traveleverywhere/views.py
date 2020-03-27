@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 from traveleverywhere.forms import UserForm, UserProfileForm, QuestionForm, AnswerForm, BlogForm, BlogImageForm
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
-from traveleverywhere.models import Question, Answer, Airline, Agency, BookingWebsite, Blog, Blog_Image, User_Profile
+from traveleverywhere.models import Question, Answer, Airline, Agency, BookingWebsite, Blog, Blog_Image, User_Profile, AirlineLike, AirlineDislike
 from django.forms import modelformset_factory
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -165,6 +165,8 @@ def add_answer(request, question_name_slug):
     return render(request, 'traveleverywhere/add_answer.html', context=context_dict)
 
 def find_rating(likes, dislikes):
+    if likes==0 and dislikes==0:
+        return 0
     return round((likes/(likes+dislikes))*5, 2)
 
 def travel(request):
@@ -172,8 +174,14 @@ def travel(request):
     airline_list = Airline.objects.all()
     airline_rating_track = []
     for airline in airline_list:
-        rating = find_rating(airline.likes, airline.dislikes)
-        airline_rating_track.append((airline, rating))
+        likes = AirlineLike.objects.filter(airline=airline).count()
+        dislikes = AirlineDislike.objects.filter(airline=airline).count()
+        user_likes = AirlineLike.objects.filter(airline=airline, user=request.user).count()
+        user_dislikes = AirlineDislike.objects.filter(airline=airline, user=request.user).count()
+        liked_bool = user_likes > 0
+        disliked_bool = user_dislikes > 0
+        rating = find_rating(likes, dislikes)
+        airline_rating_track.append((airline, rating, liked_bool, disliked_bool))
     agency_list = Agency.objects.all()
     agency_rating_track = []
     for agency in agency_list:
@@ -310,9 +318,17 @@ class LikeAirline(View):
             return HttpResponse(-1)
         except ValueError:
             return HttpResponse(-1)
-        airline.likes = airline.likes + 1
-        airline.save()
-        return HttpResponse(find_rating(airline.likes, airline.dislikes))
+        liked_airline = AirlineLike.objects.get_or_create(airline=airline, user=request.user)[0]
+        disliked_airlines = AirlineDislike.objects.filter(airline=airline, user=request.user)
+        if len(disliked_airlines) > 0:
+            print("check")
+            AirlineDislike.objects.filter(airline=airline, user=request.user).delete()
+            
+        likes = AirlineLike.objects.filter(airline=airline).count()
+        dislikes = AirlineDislike.objects.filter(airline=airline).count()
+        # airline.likes = airline.likes + 1
+        # airline.save()
+        return HttpResponse(find_rating(likes, dislikes))
 
 class DislikeAirline(View):
     @method_decorator(login_required)
@@ -324,9 +340,16 @@ class DislikeAirline(View):
             return HttpResponse(-1)
         except ValueError:
             return HttpResponse(-1)
-        airline.dislikes = airline.dislikes + 1
-        airline.save()
-        return HttpResponse(find_rating(airline.likes, airline.dislikes))
+        disliked_airline = AirlineDislike.objects.get_or_create(airline=airline, user=request.user)[0]
+        liked_airlines = AirlineLike.objects.filter(airline=airline, user=request.user)
+        if len(liked_airlines) > 0:
+            print("check2")
+            AirlineLike.objects.filter(airline=airline, user=request.user).delete()
+        likes = AirlineLike.objects.filter(airline=airline).count()
+        dislikes = AirlineDislike.objects.filter(airline=airline).count()
+        # airline.dislikes = airline.dislikes + 1
+        # airline.save()
+        return HttpResponse(find_rating(likes, dislikes))
 
 class LikeAgency(View):
     @method_decorator(login_required)
