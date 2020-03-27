@@ -105,7 +105,13 @@
 								<td id="rating3"></td>
 								<!-- <script>document.getElementById("rating3").innerHTML = computeRating(website.likes, website.dislikes)</script> -->
 								{% if user.is_authenticated %}
-									<td></td>
+									<td>
+										<strong class="like_count" data-websiteid="{{ website.id }}">{{ website.likes }}</strong> likes
+										<button class="like" data-websiteid="{{ website.id }}" class="btn btn-primary btn-sm" type="button">
+											<span data-feather="thumbs-up"></span>
+											Like
+										</button>
+									</td>
 									<td></td>
 								{% endif %}
 							</tr>

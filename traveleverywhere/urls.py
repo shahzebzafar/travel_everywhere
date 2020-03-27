@@ -22,4 +22,5 @@ urlpatterns = [
     path('like_blog/', views.LikeBLogView.as_view(), name = "like_blog" ),
     path('like_airline/', views.LikeAirline.as_view(), name = "like_airline" ),
     path('like_agency/', views.LikeAgency.as_view(), name = "like_agency"),
+    path('like_website/', views.LikeWebsite.as_view(), name = "like_website"),
 ]

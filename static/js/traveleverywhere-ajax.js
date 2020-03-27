@@ -16,7 +16,6 @@ $(document).ready(function() {
             {'airline_id':airlineIdVar,
                 'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
             function(data) {
-                console.log(airlineIdVar)
                 $("#airline strong[data-airlineid='"+airlineIdVar+"'].like_count").html(data);
                 $("#airline button[data-airlineid='"+airlineIdVar+"'].like").hide();
             })
@@ -30,6 +29,17 @@ $(document).ready(function() {
             function(data) {
                 $("#agency strong[data-agencyid='"+agencyIdVar+"'].like_count").html(data);
                 $("#agency button[data-agencyid='"+agencyIdVar+"'].like").hide();
+            })
+    });
+    $('#website .like').click(function() {
+        var websiteIdVar;
+        websiteIdVar = $(this).attr('data-websiteid');
+        $.post('/traveleverywhere/like_website/',
+            {'website_id':websiteIdVar,
+                'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
+            function(data) {
+                $("#website strong[data-websiteid='"+websiteIdVar+"'].like_count").html(data);
+                $("#website button[data-websiteid='"+websiteIdVar+"'].like").hide();
             })
     });
     $('#airline').DataTable();

@@ -313,6 +313,20 @@ class LikeAgency(View):
         agency.save()
         return HttpResponse(agency.likes)
 
+class LikeWebsite(View):
+    @method_decorator(login_required)
+    def post(self, request):
+        website_id = request.POST['website_id']
+        try:
+            website = BookingWebsite.objects.get(id=int(website_id))
+        except BookingWebsite.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+        website.likes = website.likes + 1
+        website.save()
+        return HttpResponse(website.likes)
+
 
 
 
