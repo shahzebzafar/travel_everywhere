@@ -30,13 +30,13 @@
 									<td ><strong class="rating_airline" data-airlineid="{{ airline.id }}">{{ rating }}</strong>/5</td>
 									{% if user.is_authenticated %}
 										<td>
-											<button data-airlineid="{{ airline.id }}" class="like btn btn-primary btn-sm" type="button">
+											<button data-airlineid="{{ airline.id }}" class="like btn btn-success btn-sm" type="button">
 												<span data-feather="thumbs-up"></span>
 												Like
 											</button>
 										</td>
 										<td>
-											<button data-airlineid="{{ airline.id }}" class="dislike btn btn-primary btn-sm" type="button">
+											<button data-airlineid="{{ airline.id }}" class="dislike btn btn-danger btn-sm" type="button">
 												<span data-feather="thumbs-down"></span>
 												Dislike
 											</button>
@@ -73,13 +73,13 @@
 									<td ><strong class="rating_agency" data-agencyid="{{ agency.id }}">{{ rating }}</strong>/5</td>
 									{% if user.is_authenticated %}
 										<td>
-											<button data-agencyid="{{ agency.id }}" class="like btn btn-primary btn-sm" type="button">
+											<button data-agencyid="{{ agency.id }}" class="like btn btn-success btn-sm" type="button">
 												<span data-feather="thumbs-up"></span>
 												Like
 											</button>
 										</td>
 										<td>
-											<button data-agencyid="{{ agency.id }}" class="dislike btn btn-primary btn-sm" type="button">
+											<button data-agencyid="{{ agency.id }}" class="dislike btn btn-danger btn-sm" type="button">
 												<span data-feather="thumbs-down"></span>
 												Dislike
 											</button>
@@ -116,13 +116,13 @@
 									<td ><strong class="rating_website" data-websiteid="{{ website.id }}">{{ rating }}</strong>/5</td>
 									{% if user.is_authenticated %}
 										<td>
-											<button data-websiteid="{{ website.id }}" class="like btn btn-primary btn-sm" type="button">
+											<button data-websiteid="{{ website.id }}" class="like btn btn-success btn-sm" type="button">
 												<span data-feather="thumbs-up"></span>
 												Like
 											</button>
 										</td>
 										<td>
-											<button data-websiteid="{{ website.id }}" class="dislike btn btn-primary btn-sm" type="button">
+											<button data-websiteid="{{ website.id }}" class="dislike btn btn-danger btn-sm" type="button">
 												<span data-feather="thumbs-down"></span>
 												Dislike
 											</button>
