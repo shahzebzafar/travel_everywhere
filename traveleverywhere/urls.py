@@ -23,4 +23,5 @@ urlpatterns = [
     path('like_airline/', views.LikeAirline.as_view(), name = "like_airline" ),
     path('like_agency/', views.LikeAgency.as_view(), name = "like_agency"),
     path('like_website/', views.LikeWebsite.as_view(), name = "like_website"),
+    path('dislike_airline/', views.DislikeAirline.as_view(), name = "dislike_airline"),
 ]

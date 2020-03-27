@@ -36,7 +36,13 @@
 											Like
 										</button>
 									</td>
-									<td>2</td>
+									<td>
+										<strong class="dislike_count" data-airlineid="{{ airline.id }}">{{ airline.dislikes }}</strong> dislikes
+										<button class="dislike" data-airlineid="{{ airline.id }}" class="btn btn-primary btn-sm" type="button">
+											<span data-feather="thumbs-down"></span>
+											Dislike
+										</button>
+									</td>
 								{% endif %}
 							</tr>
 						{% endfor %}

@@ -20,6 +20,17 @@ $(document).ready(function() {
                 $("#airline button[data-airlineid='"+airlineIdVar+"'].like").hide();
             })
     });
+    $('#airline .dislike').click(function() {
+        var airlineIdVar;
+        airlineIdVar = $(this).attr('data-airlineid');
+        $.post('/traveleverywhere/dislike_airline/',
+            {'airline_id':airlineIdVar,
+                'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
+            function(data) {
+                $("#airline strong[data-airlineid='"+airlineIdVar+"'].dislike_count").html(data);
+                $("#airline button[data-airlineid='"+airlineIdVar+"'].dislike").hide();
+            })
+    });
     $('#agency .like').click(function() {
         var agencyIdVar;
         agencyIdVar = $(this).attr('data-agencyid');

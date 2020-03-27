@@ -299,6 +299,20 @@ class LikeAirline(View):
         airline.save()
         return HttpResponse(airline.likes)
 
+class DislikeAirline(View):
+    @method_decorator(login_required)
+    def post(self, request):
+        airline_id = request.POST['airline_id']
+        try:
+            airline = Airline.objects.get(id=int(airline_id))
+        except Airline.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+        airline.dislikes = airline.dislikes + 1
+        airline.save()
+        return HttpResponse(airline.dislikes)
+
 class LikeAgency(View):
     @method_decorator(login_required)
     def post(self, request):
