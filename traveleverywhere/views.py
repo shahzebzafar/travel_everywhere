@@ -299,6 +299,20 @@ class LikeAirline(View):
         airline.save()
         return HttpResponse(airline.likes)
 
+class LikeAgency(View):
+    @method_decorator(login_required)
+    def post(self, request):
+        agency_id = request.POST['agency_id']
+        try:
+            agency = Agency.objects.get(id=int(agency_id))
+        except Agency.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+        agency.likes = agency.likes + 1
+        agency.save()
+        return HttpResponse(agency.likes)
+
 
 
 

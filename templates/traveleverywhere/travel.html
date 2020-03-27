@@ -31,7 +31,7 @@
 								{% if user.is_authenticated %}
 									<td>
 										<strong class="like_count" data-airlineid="{{ airline.id }}">{{ airline.likes }}</strong> likes
-										<button class="like" data-airlineid="{{ airline.id }}" data-airlinename="{{ airline.name }}" class="btn btn-primary btn-sm" type="button">
+										<button class="like" data-airlineid="{{ airline.id }}" class="btn btn-primary btn-sm" type="button">
 											<span data-feather="thumbs-up"></span>
 											Like
 										</button>
@@ -67,7 +67,13 @@
 								<td id="rating2"></td>
 								<!-- <script>document.getElementById("rating2").innerHTML = computeRating(agency.likes, agency.dislikes)</script> -->
 								{% if user.is_authenticated %}
-									<td></td>
+									<td>
+										<strong class="like_count" data-agencyid="{{ agency.id }}">{{ agency.likes }}</strong> likes
+										<button class="like" data-agencyid="{{ agency.id }}" class="btn btn-primary btn-sm" type="button">
+											<span data-feather="thumbs-up"></span>
+											Like
+										</button>
+									</td>
 									<td></td>
 								{% endif %}
 							</tr>
