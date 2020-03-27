@@ -8,125 +8,131 @@
 {% block body_block %}
 <div class="container">
 	<div class="row">
-		<div class="col-md-4">
+		<div class="col-md-12 three-div col-xs-12">
 			{% if airlines %}
-				<p>Top Airlines</p>
-				<table id="airline" class="table table-striped table-bordered" style="width:100%">
-					<thead>
-						<tr>
-							<th>Airline</th>
-							<th>Rating</th>
-							{% if user.is_authenticated %}
-								<th>Like</th>
-								<th>Dislike</th>
-							{% endif %}
-						</tr>
-					</thead>
-					<tbody>
-						{% for airline,rating in airlines %}
+				<h1 class="text-center">Top Airlines</h1>
+				<div class="table-responsive">
+					<table id="airline" class="table table-striped table-bordered">
+						<thead>
 							<tr>
-								<td><a href="{{ airline.link }}">{{airline.name}}</a></td>
-								<td ><strong class="rating_airline" data-airlineid="{{ airline.id }}">{{ rating }}</strong>/5</td>
+								<th>Airline</th>
+								<th>Rating</th>
 								{% if user.is_authenticated %}
-									<td>
-										<button class="like" data-airlineid="{{ airline.id }}" class="btn btn-primary btn-sm" type="button">
-											<span data-feather="thumbs-up"></span>
-											Like
-										</button>
-									</td>
-									<td>
-										<button class="dislike" data-airlineid="{{ airline.id }}" class="btn btn-primary btn-sm" type="button">
-											<span data-feather="thumbs-down"></span>
-											Dislike
-										</button>
-									</td>
+									<th>Like</th>
+									<th>Dislike</th>
 								{% endif %}
 							</tr>
-						{% endfor %}
-					</tbody>
-				</table>
+						</thead>
+						<tbody>
+							{% for airline,rating in airlines %}
+								<tr>
+									<td><a href="{{ airline.link }}">{{airline.name}}</a></td>
+									<td ><strong class="rating_airline" data-airlineid="{{ airline.id }}">{{ rating }}</strong>/5</td>
+									{% if user.is_authenticated %}
+										<td>
+											<button data-airlineid="{{ airline.id }}" class="like btn btn-primary btn-sm" type="button">
+												<span data-feather="thumbs-up"></span>
+												Like
+											</button>
+										</td>
+										<td>
+											<button data-airlineid="{{ airline.id }}" class="dislike btn btn-primary btn-sm" type="button">
+												<span data-feather="thumbs-down"></span>
+												Dislike
+											</button>
+										</td>
+									{% endif %}
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
 			{% else %}
 				<strong>There are no airlines to show.</strong>
 			{% endif %}
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-12 three-div pull-right col-xs-12">
 			{% if agencies %}
-				<p>Top Agencies</p>
-				<table id="agency" class="table table-striped table-bordered" style="width:100%">
-					<thead>
-						<tr>
-							<th>Agency</th>
-							<th>Rating</th>
-							{% if user.is_authenticated %}
-								<th>Like</th>
-								<th>Dislike</th>
-							{% endif %}
-						</tr>
-					</thead>
-					<tbody>
-						{% for agency,rating in agencies %}
+				<h1 class="text-center">Top Agencies</h1>
+				<div class="table-responsive">
+					<table id="agency" class="table table-striped table-bordered">
+						<thead>
 							<tr>
-								<td><a href="{{ agency.link }}">{{agency.name}}</a></td>
-								<td ><strong class="rating_agency" data-agencyid="{{ agency.id }}">{{ rating }}</strong>/5</td>
+								<th>Agency</th>
+								<th>Rating</th>
 								{% if user.is_authenticated %}
-									<td>
-										<button class="like" data-agencyid="{{ agency.id }}" class="btn btn-primary btn-sm" type="button">
-											<span data-feather="thumbs-up"></span>
-											Like
-										</button>
-									</td>
-									<td>
-										<button class="dislike" data-agencyid="{{ agency.id }}" class="btn btn-primary btn-sm" type="button">
-											<span data-feather="thumbs-down"></span>
-											Dislike
-										</button>
-									</td>
+									<th>Like</th>
+									<th>Dislike</th>
 								{% endif %}
 							</tr>
-						{% endfor %}
-					</tbody>
-				</table>
+						</thead>
+						<tbody>
+							{% for agency,rating in agencies %}
+								<tr>
+									<td><a href="{{ agency.link }}">{{agency.name}}</a></td>
+									<td ><strong class="rating_agency" data-agencyid="{{ agency.id }}">{{ rating }}</strong>/5</td>
+									{% if user.is_authenticated %}
+										<td>
+											<button data-agencyid="{{ agency.id }}" class="like btn btn-primary btn-sm" type="button">
+												<span data-feather="thumbs-up"></span>
+												Like
+											</button>
+										</td>
+										<td>
+											<button data-agencyid="{{ agency.id }}" class="dislike btn btn-primary btn-sm" type="button">
+												<span data-feather="thumbs-down"></span>
+												Dislike
+											</button>
+										</td>
+									{% endif %}
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
 			{% else %}
 				<strong>There are no agencies to show.</strong>
 			{% endif %}
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-12 three-div pull-right col-xs-12">
 			{% if websites %}
-				<p>Top Booking websites</p>
-				<table id="website" class="table table-striped table-bordered" style="width:100%">
-					<thead>
-						<tr>
-							<th>Website</th>
-							<th>Rating</th>
-							{% if user.is_authenticated %}
-								<th>Like</th>
-								<th>Dislike</th>
-							{% endif %}
-						</tr>
-					</thead>
-					<tbody>
-						{% for website,rating in websites %}
+				<h1 class="text-center">Top Booking websites</h1>
+				<div class="table-responsive">
+					<table id="website" class="table table-striped table-bordered">
+						<thead>
 							<tr>
-								<td><a href="{{ website.link }}">{{website.name}}</a></td>
-								<td ><strong class="rating_website" data-websiteid="{{ website.id }}">{{ rating }}</strong>/5</td>
+								<th>Website</th>
+								<th>Rating</th>
 								{% if user.is_authenticated %}
-									<td>
-										<button class="like" data-websiteid="{{ website.id }}" class="btn btn-primary btn-sm" type="button">
-											<span data-feather="thumbs-up"></span>
-											Like
-										</button>
-									</td>
-									<td>
-										<button class="dislike" data-websiteid="{{ website.id }}" class="btn btn-primary btn-sm" type="button">
-											<span data-feather="thumbs-down"></span>
-											Dislike
-										</button>
-									</td>
+									<th>Like</th>
+									<th>Dislike</th>
 								{% endif %}
 							</tr>
-						{% endfor %}
-					</tbody>
-				</table>
+						</thead>
+						<tbody>
+							{% for website,rating in websites %}
+								<tr>
+									<td><a href="{{ website.link }}">{{website.name}}</a></td>
+									<td ><strong class="rating_website" data-websiteid="{{ website.id }}">{{ rating }}</strong>/5</td>
+									{% if user.is_authenticated %}
+										<td>
+											<button data-websiteid="{{ website.id }}" class="like btn btn-primary btn-sm" type="button">
+												<span data-feather="thumbs-up"></span>
+												Like
+											</button>
+										</td>
+										<td>
+											<button data-websiteid="{{ website.id }}" class="dislike btn btn-primary btn-sm" type="button">
+												<span data-feather="thumbs-down"></span>
+												Dislike
+											</button>
+										</td>
+									{% endif %}
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
 			{% else %}
 				<strong>There are no websites to show.</strong>
 			{% endif %}

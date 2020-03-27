@@ -3,7 +3,7 @@
 
 <html style="background-color:#9dc3e6">
 	<head>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+		
 		<title>
 			{% block title_block %}
 				TravelEverywhere
@@ -66,13 +66,14 @@ body {
 </div>
 {% endblock %}
 	
-		<div>
-		{% block body_block %}
-			Block 'body_block' is empty.
-		{% endblock %}
-		</div>
+	<div>
+	{% block body_block %}
+		Block 'body_block' is empty.
+	{% endblock %}
+	</div>
+	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
 	<script src="{% static 'js/jquery-3.3.1.min.js' %}" crossorigin="anonymous"></script>
-	<script src="{% static 'js/traveleverywhere-query.js' %}" crossorigin="anonymous"></script>
+	<!-- <script src="{% static 'js/traveleverywhere-query.js' %}" crossorigin="anonymous"></script> -->
 	<script src="{% static 'js/traveleverywhere-ajax.js' %}" crossorigin="anonymous"></script>
 	<script src="{% static 'js/traveleverywhere-jquery-dataTable.js' %}" crossorigin="anonymous"></script>
 	<script src="{% static 'js/traveleverywhere-bootstrap4-dataTable.js' %}" crossorigin="anonymous"></script>
