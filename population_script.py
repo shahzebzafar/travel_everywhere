@@ -28,6 +28,12 @@ def populate():
         {'name':'EasyJet', 'link':'https://www.easyjet.com/'},
         {'name': 'Qatar', 'link':'https://www.qatarairways.com/'},
         {'name': 'British Airways', 'link':'https://www.britishairways.com/'},
+        {'name': 'Jet2', 'link':'https://www.jet2.com/'},
+        {'name': 'KLM', 'link':'https://www.klm.com/'},
+        {'name':'Lufthansa', 'link':'https://www.lufthansa.com/'},
+        {'name': 'Virgin Atlantic', 'link':'https://www.virginatlantic.com/'},
+        {'name': 'Turkish Airline', 'link':'https://www.turkishairlines.com/'},
+        {'name':'Wizzair', 'link':'https://wizzair.com/'},
     ]
 
     agencies = [
@@ -35,6 +41,12 @@ def populate():
         {'name':'FlightCenter', 'link':'https://www.flightcentre.co.uk/'},
         {'name': 'AppleHouseTravel', 'link':'https://www.applehousetravel.co.uk/'},
         {'name': 'Tui', 'link':'https://www.tui.co.uk/'},
+        {'name':'Kayak', 'link':'https://www.kayak.co.uk/'},
+        {'name':'Dream World Travel', 'link':'https://dreamworldtravel.co.uk/'},
+        {'name':'BookIt', 'link':'https://bookit.com/'},
+        {'name':'HotelPlanner','link':'https://www.hotelplanner.com/'},
+        {'name':'CheapOAir', 'link':'https://www.cheapoair.com/'},
+        {'name':'Global Work And Trave', 'link':'https://globalworkandtravel.com/'},
     ]
 
     websites = [
@@ -42,6 +54,12 @@ def populate():
         {'name':'Expedia', 'link':'https://www.expedia.co.uk/'},
         {'name': 'Booking', 'link':'https://www.booking.com/'},
         {'name': 'AirBnB', 'link':'https://www.airbnb.co.uk/'},
+        {'name':'Hotels.com', 'link':'https://uk.hotels.com/'},
+        {'name':'Tripadvisor', 'link':'https://www.tripadvisor.co.uk/'},
+        {'name':'Pricelne', 'link':'https://www.priceline.com/'},
+        {'name':'OrbitZ', 'link':'https://www.orbitz.com/'},
+        {'name':'Hotwire', 'link':'https://www.hotwire.com/'},
+        {'name':'Agoda', 'link':'https://www.agoda.com/'},
     ]
 
     user1 = add_user('zdravko','travel123')
