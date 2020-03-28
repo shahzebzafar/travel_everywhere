@@ -41,7 +41,9 @@ $(document).ready(function() {
                 'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
             function(data) {
                 $("#agency strong[data-agencyid='"+agencyIdVar+"'].rating_agency").html(data);
-                $("#agency button[data-agencyid='"+agencyIdVar+"'].like").hide();
+                $("#agency button[data-agencyid='"+agencyIdVar+"'].like").addClass("disabled");
+                $("#agency button[data-agencyid='"+agencyIdVar+"'].dislike").removeClass("disabled");
+
             })
     });
     $('#agency .dislike').click(function() {
@@ -52,7 +54,8 @@ $(document).ready(function() {
                 'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
             function(data) {
                 $("#agency strong[data-agencyid='"+agencyIdVar+"'].rating_agency").html(data);
-                $("#agency button[data-agencyid='"+agencyIdVar+"'].dislike").hide();
+                $("#agency button[data-agencyid='"+agencyIdVar+"'].dislike").addClass("disabled");
+                $("#agency button[data-agencyid='"+agencyIdVar+"'].like").removeClass("disabled");
             })
     });
     $('#website .like').click(function() {
@@ -63,7 +66,8 @@ $(document).ready(function() {
                 'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
             function(data) {
                 $("#website strong[data-websiteid='"+websiteIdVar+"'].rating_website").html(data);
-                $("#website button[data-websiteid='"+websiteIdVar+"'].like").hide();
+                $("#website button[data-websiteid='"+websiteIdVar+"'].like").addClass("disabled");
+                $("#website button[data-websiteid='"+websiteIdVar+"'].dislike").removeClass("disabled");
             })
     });
     $('#website .dislike').click(function() {
@@ -74,7 +78,8 @@ $(document).ready(function() {
                 'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
             function(data) {
                 $("#website strong[data-websiteid='"+websiteIdVar+"'].rating_website").html(data);
-                $("#website button[data-websiteid='"+websiteIdVar+"'].dislike").hide();
+                $("#website button[data-websiteid='"+websiteIdVar+"'].dislike").addClass("disabled");
+                $("#website button[data-websiteid='"+websiteIdVar+"'].like").removeClass("disabled");
             })
     });
     $('#airline').DataTable();

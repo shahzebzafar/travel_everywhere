@@ -73,20 +73,22 @@
 							</tr>
 						</thead>
 						<tbody>
-							{% for agency,rating in agencies %}
+							{% for agency,rating,liked_bool,disliked_bool in agencies %}
 								<tr>
 									<td><a href="{{ agency.link }}">{{agency.name}}</a></td>
 									<td ><strong class="rating_agency" data-agencyid="{{ agency.id }}">{{ rating }}</strong>/5</td>
 									{% if user.is_authenticated %}
 										<td>
-											<button data-agencyid="{{ agency.id }}" class="like btn btn-success btn-sm" type="button">
-												<span data-feather="thumbs-up"></span>
+											<button data-agencyid="{{ agency.id }}" 
+												class="like btn btn-success btn-sm {% if liked_bool %} disabled {% endif %}"
+												type="button">
 												Like
 											</button>
 										</td>
 										<td>
-											<button data-agencyid="{{ agency.id }}" class="dislike btn btn-danger btn-sm" type="button">
-												<span data-feather="thumbs-down"></span>
+											<button data-agencyid="{{ agency.id }}" 
+												class="dislike btn btn-danger btn-sm {% if disliked_bool %} disabled {% endif %}"
+												type="button">
 												Dislike
 											</button>
 										</td>
@@ -116,20 +118,22 @@
 							</tr>
 						</thead>
 						<tbody>
-							{% for website,rating in websites %}
+							{% for website,rating,liked_bool,disliked_bool in websites %}
 								<tr>
 									<td><a href="{{ website.link }}">{{website.name}}</a></td>
 									<td ><strong class="rating_website" data-websiteid="{{ website.id }}">{{ rating }}</strong>/5</td>
 									{% if user.is_authenticated %}
 										<td>
-											<button data-websiteid="{{ website.id }}" class="like btn btn-success btn-sm" type="button">
-												<span data-feather="thumbs-up"></span>
+											<button data-websiteid="{{ website.id }}" 
+												class="like btn btn-success btn-sm {% if liked_bool %} disabled {% endif %}"
+												type="button">
 												Like
 											</button>
 										</td>
 										<td>
-											<button data-websiteid="{{ website.id }}" class="dislike btn btn-danger btn-sm" type="button">
-												<span data-feather="thumbs-down"></span>
+											<button data-websiteid="{{ website.id }}" 
+												class="dislike btn btn-danger btn-sm {% if disliked_bool %} disabled {% endif %}"
+												type="button">
 												Dislike
 											</button>
 										</td>

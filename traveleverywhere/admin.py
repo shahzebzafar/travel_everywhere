@@ -1,5 +1,5 @@
 from django.contrib import admin
-from traveleverywhere.models import Question, Answer, Blog, Blog_Image, User_Profile, Airline, Agency, BookingWebsite, AirlineLike, AirlineDislike
+from traveleverywhere.models import Question, Answer, Blog, Blog_Image, User_Profile, Airline, Agency, BookingWebsite, AirlineLike, AirlineDislike, AgencyLike, AgencyDislike, WebsiteLike, WebsiteDislike
 
 class QuestionAdmin(admin.ModelAdmin):
     propopulated_fields = {'slug':('name',)}
@@ -14,3 +14,7 @@ admin.site.register(Agency)
 admin.site.register(BookingWebsite)
 admin.site.register(AirlineLike)
 admin.site.register(AirlineDislike)
+admin.site.register(AgencyLike)
+admin.site.register(AgencyDislike)
+admin.site.register(WebsiteLike)
+admin.site.register(WebsiteDislike)

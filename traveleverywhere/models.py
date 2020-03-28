@@ -84,22 +84,32 @@ class AirlineDislike(models.Model):
 class Agency(models.Model):
     name = models.CharField(max_length=20)
     link = models.URLField(max_length=30)
-    likes = models.IntegerField(default=0)
-    dislikes = models.IntegerField(default=0)
-    user = models.ManyToManyField(User)
 
     class Meta:
         verbose_name_plural = 'Agencies'
 
     def __str__(self):
         return self.name
+    
+class AgencyLike(models.Model):
+    agency = models.ForeignKey(Agency, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE, null=True)
+
+class AgencyDislike(models.Model):
+    agency = models.ForeignKey(Agency, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE, null=True)
 
 class BookingWebsite(models.Model):
     name = models.CharField(max_length=20)
     link = models.URLField(max_length=30)
-    likes = models.IntegerField(default=0)
-    dislikes = models.IntegerField(default=0)
-    user = models.ManyToManyField(User)
 
     def __str__(self):
         return self.name
+
+class WebsiteLike(models.Model):
+    website = models.ForeignKey(BookingWebsite, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE, null=True)
+
+class WebsiteDislike(models.Model):
+    website = models.ForeignKey(BookingWebsite, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE, null=True)

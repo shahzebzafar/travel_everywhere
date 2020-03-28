@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 from traveleverywhere.forms import UserForm, UserProfileForm, QuestionForm, AnswerForm, BlogForm, BlogImageForm
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
-from traveleverywhere.models import Question, Answer, Airline, Agency, BookingWebsite, Blog, Blog_Image, User_Profile, AirlineLike, AirlineDislike
+from traveleverywhere.models import Question, Answer, Airline, Agency, BookingWebsite, Blog, Blog_Image, User_Profile, AirlineLike, AirlineDislike, AgencyLike, AgencyDislike, WebsiteLike, WebsiteDislike
 from django.forms import modelformset_factory
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -176,22 +176,46 @@ def travel(request):
     for airline in airline_list:
         likes = AirlineLike.objects.filter(airline=airline).count()
         dislikes = AirlineDislike.objects.filter(airline=airline).count()
-        user_likes = AirlineLike.objects.filter(airline=airline, user=request.user).count()
-        user_dislikes = AirlineDislike.objects.filter(airline=airline, user=request.user).count()
-        liked_bool = user_likes > 0
-        disliked_bool = user_dislikes > 0
+        if not request.user.is_anonymous:
+            user_likes = AirlineLike.objects.filter(airline=airline, user=request.user).count()
+            user_dislikes = AirlineDislike.objects.filter(airline=airline, user=request.user).count()
+            liked_bool = user_likes > 0
+            disliked_bool = user_dislikes > 0
+        else:
+            liked_bool = False
+            disliked_bool = False
         rating = find_rating(likes, dislikes)
         airline_rating_track.append((airline, rating, liked_bool, disliked_bool))
     agency_list = Agency.objects.all()
     agency_rating_track = []
     for agency in agency_list:
-        rating = find_rating(agency.likes, agency.dislikes)
-        agency_rating_track.append((agency, rating))
+        likes = AgencyLike.objects.filter(agency=agency).count()
+        dislikes = AgencyDislike.objects.filter(agency=agency).count()
+        if not request.user.is_anonymous:
+            user_likes = AgencyLike.objects.filter(agency=agency, user=request.user).count()
+            user_dislikes = AgencyDislike.objects.filter(agency=agency, user=request.user).count()
+            liked_bool = user_likes > 0
+            disliked_bool = user_dislikes > 0
+        else:
+            liked_bool = False
+            disliked_bool = False
+        rating = find_rating(likes, dislikes)
+        agency_rating_track.append((agency, rating, liked_bool, disliked_bool))
     website_list = BookingWebsite.objects.all()
     website_rating_track = []
     for website in website_list:
-        rating = find_rating(website.likes, website.dislikes)
-        website_rating_track.append((website, rating))
+        likes = WebsiteLike.objects.filter(website=website).count()
+        dislikes = WebsiteDislike.objects.filter(website=website).count()
+        if not request.user.is_anonymous:
+            user_likes = WebsiteLike.objects.filter(website=website, user=request.user).count()
+            user_dislikes = WebsiteDislike.objects.filter(website=website, user=request.user).count()
+            liked_bool = user_likes > 0
+            disliked_bool = user_dislikes > 0
+        else:
+            liked_bool = False
+            disliked_bool = False
+        rating = find_rating(likes, dislikes)
+        website_rating_track.append((website, rating, liked_bool, disliked_bool))
     context_dict['airlines'] = airline_rating_track
     context_dict['agencies'] = agency_rating_track
     context_dict['websites'] = website_rating_track
@@ -321,13 +345,10 @@ class LikeAirline(View):
         liked_airline = AirlineLike.objects.get_or_create(airline=airline, user=request.user)[0]
         disliked_airlines = AirlineDislike.objects.filter(airline=airline, user=request.user)
         if len(disliked_airlines) > 0:
-            print("check")
             AirlineDislike.objects.filter(airline=airline, user=request.user).delete()
             
         likes = AirlineLike.objects.filter(airline=airline).count()
         dislikes = AirlineDislike.objects.filter(airline=airline).count()
-        # airline.likes = airline.likes + 1
-        # airline.save()
         return HttpResponse(find_rating(likes, dislikes))
 
 class DislikeAirline(View):
@@ -343,12 +364,9 @@ class DislikeAirline(View):
         disliked_airline = AirlineDislike.objects.get_or_create(airline=airline, user=request.user)[0]
         liked_airlines = AirlineLike.objects.filter(airline=airline, user=request.user)
         if len(liked_airlines) > 0:
-            print("check2")
             AirlineLike.objects.filter(airline=airline, user=request.user).delete()
         likes = AirlineLike.objects.filter(airline=airline).count()
         dislikes = AirlineDislike.objects.filter(airline=airline).count()
-        # airline.dislikes = airline.dislikes + 1
-        # airline.save()
         return HttpResponse(find_rating(likes, dislikes))
 
 class LikeAgency(View):
@@ -361,9 +379,13 @@ class LikeAgency(View):
             return HttpResponse(-1)
         except ValueError:
             return HttpResponse(-1)
-        agency.likes = agency.likes + 1
-        agency.save()
-        return HttpResponse(find_rating(agency.likes, agency.dislikes))
+        liked_agency = AgencyLike.objects.get_or_create(agency=agency, user=request.user)[0]
+        disliked_agencies = AgencyDislike.objects.filter(agency=agency, user=request.user)
+        if len(disliked_agencies) > 0:
+            AgencyDislike.objects.filter(agency=agency, user=request.user).delete()
+        likes = AgencyLike.objects.filter(agency=agency).count()
+        dislikes = AgencyDislike.objects.filter(agency=agency).count()
+        return HttpResponse(find_rating(likes, dislikes))
 
 class DislikeAgency(View):
     @method_decorator(login_required)
@@ -375,9 +397,13 @@ class DislikeAgency(View):
             return HttpResponse(-1)
         except ValueError:
             return HttpResponse(-1)
-        agency.dislikes = agency.dislikes + 1
-        agency.save()
-        return HttpResponse(find_rating(agency.likes, agency.dislikes))
+        disliked_agency = AgencyDislike.objects.get_or_create(agency=agency, user=request.user)[0]
+        liked_agencies = AgencyLike.objects.filter(agency=agency, user=request.user)
+        if len(liked_agencies) > 0:
+            AgencyLike.objects.filter(agency=agency, user=request.user).delete()
+        likes = AgencyLike.objects.filter(agency=agency).count()
+        dislikes = AgencyDislike.objects.filter(agency=agency).count()
+        return HttpResponse(find_rating(likes, dislikes))
 
 class LikeWebsite(View):
     @method_decorator(login_required)
@@ -389,9 +415,13 @@ class LikeWebsite(View):
             return HttpResponse(-1)
         except ValueError:
             return HttpResponse(-1)
-        website.likes = website.likes + 1
-        website.save()
-        return HttpResponse(find_rating(website.likes, website.dislikes))
+        liked_website = WebsiteLike.objects.get_or_create(website=website, user=request.user)[0]
+        disliked_websites = WebsiteDislike.objects.filter(website=website, user=request.user)
+        if len(disliked_websites) > 0:
+            WebsiteDislike.objects.filter(website=website, user=request.user).delete()
+        likes = WebsiteLike.objects.filter(website=website).count()
+        dislikes = WebsiteDislike.objects.filter(website=website).count()
+        return HttpResponse(find_rating(likes, dislikes))
 
 class DislikeWebsite(View):
     @method_decorator(login_required)
@@ -403,9 +433,13 @@ class DislikeWebsite(View):
             return HttpResponse(-1)
         except ValueError:
             return HttpResponse(-1)
-        website.dislikes = website.dislikes + 1
-        website.save()
-        return HttpResponse(find_rating(website.likes, website.dislikes))
+        disliked_website = WebsiteDislike.objects.get_or_create(website=website, user=request.user)[0]
+        liked_websites = WebsiteLike.objects.filter(website=website, user=request.user)
+        if len(liked_websites) > 0:
+            WebsiteLike.objects.filter(website=website, user=request.user).delete()
+        likes = WebsiteLike.objects.filter(website=website).count()
+        dislikes = WebsiteDislike.objects.filter(website=website).count()
+        return HttpResponse(find_rating(likes, dislikes))
 
 
 
