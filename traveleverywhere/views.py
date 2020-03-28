@@ -186,6 +186,7 @@ def travel(request):
             disliked_bool = False
         rating = find_rating(likes, dislikes)
         airline_rating_track.append((airline, rating, liked_bool, disliked_bool))
+    airline_rating_track = sorted(airline_rating_track, key=lambda x: x[1])
     agency_list = Agency.objects.all()
     agency_rating_track = []
     for agency in agency_list:
@@ -201,6 +202,7 @@ def travel(request):
             disliked_bool = False
         rating = find_rating(likes, dislikes)
         agency_rating_track.append((agency, rating, liked_bool, disliked_bool))
+    agency_rating_track = sorted(agency_rating_track, key=lambda x: x[1])
     website_list = BookingWebsite.objects.all()
     website_rating_track = []
     for website in website_list:
@@ -216,6 +218,7 @@ def travel(request):
             disliked_bool = False
         rating = find_rating(likes, dislikes)
         website_rating_track.append((website, rating, liked_bool, disliked_bool))
+    website_rating_track = sorted(website_rating_track, key=lambda x: x[1])
     context_dict['airlines'] = airline_rating_track
     context_dict['agencies'] = agency_rating_track
     context_dict['websites'] = website_rating_track
