@@ -30,7 +30,6 @@ class Blog(models.Model):
     title = models.CharField(max_length = 50)
     body = models.CharField(max_length = 10000)
     bodySummary = models.CharField(max_length = 200)
-    likes = models.IntegerField(default = 0)
     publish_date = models.DateField(auto_now_add = True)
     location_country = models.CharField(max_length = 20)
     location_city = models.CharField(max_length = 20, blank = True)
@@ -57,6 +56,10 @@ def get_image_filename(instance, filename):
 class Blog_Image(models.Model):
     blog = models.ForeignKey(Blog, on_delete = models.CASCADE, default = None)
     image = models.ImageField(upload_to = get_image_filename, verbose_name = "Image")
+
+class BlogLike(models.Model):
+    blog = models.ForeignKey(Blog, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE, null=True)
                 
 class User_Profile(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)

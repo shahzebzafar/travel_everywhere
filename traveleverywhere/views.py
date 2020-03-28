@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 from traveleverywhere.forms import UserForm, UserProfileForm, QuestionForm, AnswerForm, BlogForm, BlogImageForm
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
-from traveleverywhere.models import Question, Answer, Airline, Agency, BookingWebsite, Blog, Blog_Image, User_Profile, AirlineLike, AirlineDislike, AgencyLike, AgencyDislike, WebsiteLike, WebsiteDislike
+from traveleverywhere.models import Question, Answer, Airline, Agency, BookingWebsite, Blog, Blog_Image, User_Profile, AirlineLike, AirlineDislike, AgencyLike, AgencyDislike, WebsiteLike, WebsiteDislike, BlogLike
 from django.forms import modelformset_factory
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -97,11 +97,21 @@ def show_blog(request, blog_name_slug):
     try:
         blog = Blog.objects.get(slug = blog_name_slug)
         images = Blog_Image.objects.filter(blog = blog)
+        likes = BlogLike.objects.filter(blog = blog).count()
+        if not request.user.is_anonymous:
+            user_likes = BlogLike.objects.filter(blog = blog, user=request.user).count()
+            liked_bool = user_likes > 0
+        else:
+            liked_bool = False
         context_dict['blog'] = blog
         context_dict['images'] = images
+        context_dict['likes'] = likes
+        context_dict['liked_bool'] = liked_bool
     except Blog.DoesNotExist:
         context_dict['blog'] = None
         context_dict['images'] = None
+        context_dict['likes'] = None
+        context_dict['liked_bool'] = None
     return render(request, 'traveleverywhere/show_blog.html', context = context_dict)
     
 
@@ -323,17 +333,17 @@ class MyAccountView(View):
 
 class LikeBLogView(View):
     @method_decorator(login_required)
-    def get(self, request):
-        blog_id = request.GET['blog_id']
+    def post(self, request):
+        blog_id = request.POST['blog_id']
         try:
             blog = Blog.objects.get(id=int(blog_id))
         except Blog.DoesNotExist:
             return HttpResponse(-1)
         except ValueError:
             return HttpResponse(-1)
-        blog.likes = blog.likes + 1
-        blog.save()
-        return HttpResponse(blog.likes)
+        liked_blog = BlogLike.objects.get_or_create(blog=blog, user=request.user)[0]
+        likes = BlogLike.objects.filter(blog=blog).count()
+        return HttpResponse(likes)
 
 class LikeAirline(View):
     @method_decorator(login_required)

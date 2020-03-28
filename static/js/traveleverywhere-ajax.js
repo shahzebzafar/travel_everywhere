@@ -2,11 +2,12 @@ $(document).ready(function() {
     $('#like_btn').click(function() {
         var blogIdVar;
         blogIdVar = $(this).attr('data-blogid');
-        $.get('/traveleverywhere/like_blog/', 
-            {'blog_id': blogIdVar},
+        $.post('/traveleverywhere/like_blog/', 
+            {'blog_id': blogIdVar,
+                'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
             function(data) {
                 $('#like_count').html(data);
-                $('#like_btn').hide();
+                $('#like_btn').addClass("disabled");
             })
     });
     $('#airline .like').click(function() {
