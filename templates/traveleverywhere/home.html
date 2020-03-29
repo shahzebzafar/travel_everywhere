@@ -25,6 +25,14 @@
 		{% endif %}
 	</div>
 	<div>
+		{% if most_popular_destinations %}
+			<h1>Most popular destinations</h1>
+			{% for destination in most_popular_destinations %}
+				<p>{{ destination }}</p>
+			{% endfor %}
+		{% endif %}
+	</div>
+	<div>
 		<img src="{% static 'images/plane.jpg' %}" alt="TravelEverywhere home Picture"/>
 	</div>>
 {% endblock %}

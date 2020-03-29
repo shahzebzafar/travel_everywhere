@@ -12,7 +12,16 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.views import View
 from django.utils.decorators import method_decorator
+import json
 
+def create_destination_dict():
+    destination_popularity = {}
+    with open('traveleverywhere/world-destinations.json') as json_file:
+        destinations = json.load(json_file)
+        for line in destinations:
+            destination_popularity[line['name'].strip()] = 0
+            destination_popularity[line['country'].strip()] = 0
+    return destination_popularity
 
 def home(request):
     context_dict = {}
@@ -36,11 +45,25 @@ def home(request):
         question_answers_list.append((question, answers))
     question_answers_list = sorted(question_answers_list, key=lambda x: x[1])
     most_popular_questions = []
-    for question, answers in question_answers_list[:3]:
+    for question, answers in question_answers_list[-3:]:
         most_popular_questions.append(question)
+    blog_titles = []
+    for blog in blogs:
+        blog_titles.append(blog.title)
+    destination_popularity = create_destination_dict()
+    for destination in destination_popularity:
+        for title in blog_titles:
+            if destination.lower() in title.lower():
+                destination_popularity[destination] += 1
+    destination_popularity_list = sorted(destination_popularity.items(), key=lambda x: x[1])
+    most_popular_destinations = []
+    for dest,popularity in destination_popularity_list[-5:]:
+        if popularity > 0:
+            most_popular_destinations.append(dest)
     context_dict['visits'] = request.session['visits']
     context_dict['featured_blog'] = blog_likes_list[0][0]
     context_dict['most_popular_questions'] = most_popular_questions
+    context_dict['most_popular_destinations'] = most_popular_destinations
     response = render(request, 'traveleverywhere/home.html', context=context_dict)
     return response
 
