@@ -17,6 +17,14 @@
 		{% endif %}
 	</div>
 	<div>
+		{% if most_popular_questions %}
+			<h1>Most popular questions</h1>
+			{% for question in most_popular_questions %}
+				<a href="{% url 'traveleverywhere:show_question' question.slug %}">{{ question.title }}</a></br>
+			{% endfor %}
+		{% endif %}
+	</div>
+	<div>
 		<img src="{% static 'images/plane.jpg' %}" alt="TravelEverywhere home Picture"/>
 	</div>>
 {% endblock %}

@@ -26,8 +26,21 @@ def home(request):
             likes = 0
         blog_likes_list.append((blog, likes))
     blog_likes_list = sorted(blog_likes_list, key=lambda x: x[1])
+    questions = Question.objects.all()
+    question_answers_list = []
+    for question in questions:
+        try:
+            answers = Answer.objects.filter(question=question).count()
+        except:
+            answers = 0
+        question_answers_list.append((question, answers))
+    question_answers_list = sorted(question_answers_list, key=lambda x: x[1])
+    most_popular_questions = []
+    for question, answers in question_answers_list[:3]:
+        most_popular_questions.append(question)
     context_dict['visits'] = request.session['visits']
     context_dict['featured_blog'] = blog_likes_list[0][0]
+    context_dict['most_popular_questions'] = most_popular_questions
     response = render(request, 'traveleverywhere/home.html', context=context_dict)
     return response
 
