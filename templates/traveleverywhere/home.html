@@ -1,10 +1,12 @@
 {% extends 'traveleverywhere/base.html' %}
+{% load staticfiles %}
 
 {% block title_block %}
 	Home - TravelEverywhere
 {% endblock %}
 	
 {% block body_block %}
-	<br>
-    (Home content)
+	<div>
+		<img src="{% static 'images/plane.jpg' %}" alt="TravelEverywhere home Picture"/>
+	</div>>
 {% endblock %}
