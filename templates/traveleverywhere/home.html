@@ -7,6 +7,16 @@
 	
 {% block body_block %}
 	<div>
+		{% if featured_blog %}
+			<h1>Featured blog</h1>
+			<div>
+				<p>{{ featured_blog.title }}</p>
+				<p>{{ featured_blog.bodySummary }}</p>
+				<a href="{% url 'traveleverywhere:show_blog' featured_blog.slug %}">Continue reading</a>
+			</div>
+		{% endif %}
+	</div>
+	<div>
 		<img src="{% static 'images/plane.jpg' %}" alt="TravelEverywhere home Picture"/>
 	</div>>
 {% endblock %}

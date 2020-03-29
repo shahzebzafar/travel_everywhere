@@ -17,7 +17,17 @@ from django.utils.decorators import method_decorator
 def home(request):
     context_dict = {}
     visitor_cookie_handler(request)
+    blogs = Blog.objects.all()
+    blog_likes_list = []
+    for blog in blogs:
+        try:
+            likes = BlogLike.objects.filter(blog=blog).count()
+        except:
+            likes = 0
+        blog_likes_list.append((blog, likes))
+    blog_likes_list = sorted(blog_likes_list, key=lambda x: x[1])
     context_dict['visits'] = request.session['visits']
+    context_dict['featured_blog'] = blog_likes_list[0][0]
     response = render(request, 'traveleverywhere/home.html', context=context_dict)
     return response
 
