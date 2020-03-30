@@ -6,17 +6,26 @@
 {% endblock %}
 	
 {% block body_block %}
-<h1>Sign up for TravelEverywhere</h1>
+<h1 class="text-center signup-title">Sign up for TravelEverywhere</h1>
 {% if registered %}
-    <strong>Thank you for signing up!</strong>
-    <a href="{% url 'traveleverywhere:home' %}">Return to homepage.</a><br />
+    <div class="mx-auto" style="width: 500px;">
+        <h2>Thank you for signing up!</h2></br>
+        <a href="{% url 'traveleverywhere:home' %}">Return to homepage.</a><br />
+    </div>
 {% else %}
-    <strong>Sign up here!</strong><br />
-    <form id="user_form" method="post" action="{% url 'traveleverywhere:signup' %}" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ user_form.as_p }}
-        {{ profile_form.as_p }}
-        <input type="submit" name="submit" value="Sign up" />
-    </form>
+    <div class="container w-50 mx-auto">
+        <div class="row">
+            <div class="form-group">
+                <form role="form" id="user_form" method="post" action="{% url 'traveleverywhere:signup' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ user_form.as_p }}
+                        {{ profile_form.as_p }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign up</button>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endif %}
 {% endblock %}
