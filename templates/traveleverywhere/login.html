@@ -6,17 +6,26 @@
 {% endblock %}
 	
 {% block body_block %}
-<h1>Login to TravelEverywhere</h1>
-<form id="login_form" method="post" action="{% url 'traveleverywhere:login' %}">
-	{% csrf_token %}
-	Username: <input type="text" name="username" value="" size="50" />
-	<br />
-	Password: <input type="password" name="password" value="" size="50" />
-	<br />
-	<input type="submit" value="Login" />
-</form>
-<div>
-	<p>You don't have an account yet?</p>
-	<a href="{% url 'traveleverywhere:signup' %}">Sign up</a>
+<h1 class="text-center login-title">Login to TravelEverywhere</h1>
+<div class='container login-box w-50 mx-auto'>
+	<form class='form-signin' role='form' id="login_form" method="post" action="{% url 'traveleverywhere:login' %}">
+		{% csrf_token %}
+		<div class="user-box">
+			<label for="inputUsername" class="sr-only">Username</label> 
+			<input type="text" name="username" value="" size="50"  id="id_username" class="form-control" placeholder="Username" required autofocus>
+		</div>
+		<div class="password-box">
+			<label for="inputPassword" class="sr-only">Password</label> 
+			<input type="password" name="password" value="" size="50" id="id_password" class="form-control" placeholder="Password" required>
+		</div>
+		<button class="btn btn-lg btn-primary btn-block" type="submit" 
+			value="Submit">Login</button>
+		<!-- <input type="submit" value="Login" /> -->
+	</form>
+	<div>
+		<p class="text-center login-quest">You don't have an account yet?
+			<a href="{% url 'traveleverywhere:signup' %}">Sign up</a>
+		</p>
+	</div>
 </div>
 {% endblock %}

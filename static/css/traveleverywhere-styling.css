@@ -1,0 +1,26 @@
+.login-title {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-right: 100px;
+    margin-left: 100px;
+}
+
+.user-box {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.password-box {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.login-quest {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.login-box {
+    margin-right: 200px;
+    margin-left: 200px;
+}
