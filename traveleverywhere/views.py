@@ -35,6 +35,7 @@ def home(request):
             likes = 0
         blog_likes_list.append((blog, likes))
     blog_likes_list = sorted(blog_likes_list, key=lambda x: x[1])
+    featured_blog_list = blog_likes_list[-1:]
     questions = Question.objects.all()
     question_answers_list = []
     for question in questions:
@@ -61,7 +62,7 @@ def home(request):
         if popularity > 0:
             most_popular_destinations.append(dest)
     context_dict['visits'] = request.session['visits']
-    context_dict['featured_blog'] = blog_likes_list[0][0]
+    context_dict['featured_blog_list'] = featured_blog_list
     context_dict['most_popular_questions'] = most_popular_questions
     context_dict['most_popular_destinations'] = most_popular_destinations
     response = render(request, 'traveleverywhere/home.html', context=context_dict)
@@ -76,35 +77,11 @@ def add_blog(request):
             blog = form.save(commit=False)
             blog.user = request.user
             blog.bodySummary = blog.body[:200]
-            # blog.publish_date = datetime.datetime.now()
             blog.save()
             return redirect('/traveleverywhere/blogs/')
         else:
             print(form.errors)
     return render(request, 'traveleverywhere/add_blog.html', {'form':form})
-    # BlogImages = modelformset_factory(Blog_Image, form = BlogImageForm, extra = 10)
-    # if request.method == 'POST':
-    #     blog_form = BlogForm(request.POST)
-    #     images_set = BlogImages(request.POST, request.FILES, queryset = Blog_Image.objects.none())
-    #     if blog_form.is_valid() and images_set.is_valid():
-    #         blog = blog_form.save(commit = False)
-    #         blog.user = request.user
-    #         blog.bodySummary = blog.body[:200]
-    #         blog.save()
-    #         for im in images_set.cleaned_data:
-    #             if im:
-    #                 image = im['image']
-    #                 picture = Blog_Image(add_blog = blog, image = image)
-    #                 picture.save()
-    #         return redirect(reverse('traveleverywhere:blogs', kwargs={'category_name_slug': category_name_slug}))
-    #     else:
-    #         print(blog_form.errors, images_set.errors)
-    # else:
-    #     blog_form = BlogForm()
-    #     images_set = BlogImages(queryset = Blog_Image.objects.none())
-    #     context_dict['blog'] = blog_form
-    #     context_dict['images'] = images_set
-    #     return render(request, 'traveleverywhere/add_blog.html', context=context_dict)
 
 @login_required
 def add_image(request, blog_name_slug):

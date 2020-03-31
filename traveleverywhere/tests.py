@@ -1,5 +1,5 @@
 from django.test import TestCase
-from traveleverywhere.models import Question, Blog, Answer, Airline, Agency, BookingWebsite, User, AirlineLike, AirlineDislike, AgencyLike, AgencyDislike, WebsiteLike, WebsiteDislike
+from traveleverywhere.models import Question, Blog, Answer, Airline, Agency, BookingWebsite, User, AirlineLike, AirlineDislike, AgencyLike, AgencyDislike, WebsiteLike, WebsiteDislike, BlogLike, Blog_Image
 from django.urls import reverse
 
 
@@ -129,7 +129,15 @@ def add_website_dislike(website, user):
     website_dislike.save()
     return website_dislike
 
+def add_blog(title):
+    blog = Blog.objects.get_or_create(title=title)[0]
+    blog.save()
+    return blog
 
+def add_blog_like(blog, user):
+    blog_like = BlogLike.objects.get_or_create(blog=blog, user=user)[0]
+    blog_like.save()
+    return blog_like
 
 class TravelViewTests(TestCase):
 
@@ -327,6 +335,65 @@ class TravelViewTests(TestCase):
         self.assertContains(response, 'Trivago')
         self.assertContains(response, 'Expedia')
         self.assertTrue(response.context['websites'][0][1] <= response.context['websites'][1][1])
+
+class HomeViewTests(TestCase):
+
+    def test_home_view_for_featured_blog(self):
+        """
+        Checks whether the featured blog is the one with most likes.
+        """
+        blog1 = add_blog("Trip to Japan")
+        blog2 = add_blog("When in Rome")
+        user1 = add_user('john', 'travel123')
+        user2 = add_user('gregory', 'gr1234')
+        blog1_like1 = add_blog_like(blog1, user1)
+        blog1_like2 = add_blog_like(blog1, user2)
+
+        response = self.client.get(reverse('traveleverywhere:home'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Trip to Japan')
+        self.assertEquals(response.context['featured_blog_list'][0][0], blog1)
+
+    def test_home_view_for_most_popular_questions(self):
+        """
+        Check whether the most popular questions on the home page are the three with most answers.
+        """
+        question1 = add_question("How to go to Japan?")
+        question2 = add_question("When is the sunrise in Canada?")
+        question3 = add_question("How far is Bulgaria from India?")
+        question4 = add_question("How long would it take to go to Dundee from Glasgow?")
+        add_answer("Have a look at TravelEverywhere's Travel page", question1)
+        add_answer("By train from China.", question1)
+        add_answer("Depends from where and when.", question1)
+        add_answer("I have no idea.", question2)
+        add_answer("At 3:30 pm", question2)
+        add_answer("5000km", question3)
+        most_popular_questions = [question3, question2, question1]
+
+        response = self.client.get(reverse('traveleverywhere:home'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "How to go to Japan?")
+        self.assertContains(response, "When is the sunrise in Canada?")
+        self.assertContains(response, "How far is Bulgaria from India?")
+        self.assertEquals(response.context['most_popular_questions'], most_popular_questions)
+
+    def test_home_view_for_most_popular_destinations(self):
+        """
+        Check whether the most popular destinations are displayed on the home page.
+        Those should be the cities or countries which appear in the blog titles most often.
+        """
+        add_blog("Trip to Japan")
+        add_blog("When in Rome")
+        add_blog("Venice - my dream")
+        add_blog("Japan - the mistical country")
+
+        response = self.client.get(reverse('traveleverywhere:home'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Japan")
+        self.assertContains(response, "Rome")
+        self.assertContains(response, "Venice")
+        
+
 
     
 

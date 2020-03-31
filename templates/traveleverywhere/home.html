@@ -27,13 +27,15 @@
 					<div class="card-body">
 						<h2>Featured blog</h2>
 						<p class="card-text">
-							{% if featured_blog %}
+							{% if featured_blog_list %}
 								<dl>
-									<dt>{{ featured_blog.title }}</dt>
-									<dd>
-										<p>{{ featured_blog.bodySummary }}</p>
-										<a href="{% url 'traveleverywhere:show_blog' featured_blog.slug %}">Continue reading</a>
-									</dd>
+									{% for featured_blog, likes in featured_blog_list %}
+										<dt>{{ featured_blog.title }}</dt>
+										<dd>
+											<p>{{ featured_blog.bodySummary }}</p>
+											<a href="{% url 'traveleverywhere:show_blog' featured_blog.slug %}">Continue reading</a>
+										</dd>
+									{% endfor %}
 								</dl>
 							{% endif %}
 						</p>
