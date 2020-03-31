@@ -1,29 +1,40 @@
-<!DOCTYPE html>
 {% extends 'traveleverywhere/base.html' %}
+{% load staticfiles %}
 
 {% block title_block %}
 	Blogs - TravelEverywhere
 {% endblock %}
 	
 {% block body_block %}
-	<div>
-		{% if user.is_authenticated %}
-			<a href="{% url 'traveleverywhere:add_blog'%}">Create a new blog</a><br />
-		{% endif %}
-		{% if blogs %}
-			<ul>
-				{% for blog, blogSummary, image_list in blogs %}
-				<li>
-					<a href="{% url 'traveleverywhere:show_blog' blog.slug %}">{{ blog.title }}</a>
-					<p>{{ blogSummary }}</p>
-					{% for image in image_list %}
-						<img src="{{ image.image.url }}" />
+	<div class="row">
+		
+		<div class="col-md-10">
+			{% if blogs %}
+				<dl class="dl-body">
+					{% for blog, blogSummary, image_list in blogs %}
+					<div class="blog">
+						<dt>
+							<a href="{% url 'traveleverywhere:show_blog' blog.slug %}">{{ blog.title }}</a>
+						</dt>
+						<dd>
+							<p>{{ blogSummary }}</p>
+							{% for image in image_list %}
+								<img class="img-thumbnail w-25" src="{{ image.image.url }}" />
+							{% endfor %}
+						</dd>
+					</div>
 					{% endfor %}
-				</li>
-				{% endfor %}
-			</ul>
-		{% else %}
-			<strong>There are no blogs posted.</strong>
-		{% endif %}
+				</dl>
+			{% else %}
+				<strong>There are no blogs posted.</strong>
+			{% endif %}
+		</div>
+		<div class="col-md-2">
+			<div class="float-sm-right link-button">
+				{% if user.is_authenticated %}
+					<a role="button" class="btn btn-primary" href="{% url 'traveleverywhere:add_blog'%}">Create a new blog</a><br />
+				{% endif %}
+			</div>
+		</div>
 	</div>
 {% endblock %}

@@ -31,3 +31,20 @@
     margin-right: 100px;
     margin-left: 100px;
 }
+
+.link-button {
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.dl-body {
+    margin-top: 30px;
+    margin-left: 30px;
+}
+
+.blog {
+    border-bottom: gray;
+    border-bottom-style: solid;
+    margin-top: 10px;
+    margin-bottom: 1px;
+}
