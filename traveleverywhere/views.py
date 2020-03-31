@@ -49,13 +49,14 @@ def home(request):
         most_popular_questions.append(question)
     blog_titles = []
     for blog in blogs:
-        blog_titles.append(blog.title)
+        blog_titles.append(blog.title.lower().split())
     destination_popularity = create_destination_dict()
     for destination in destination_popularity:
         for title in blog_titles:
-            if destination.lower() in title.lower():
+            if destination.lower() in title:
                 destination_popularity[destination] += 1
     destination_popularity_list = sorted(destination_popularity.items(), key=lambda x: x[1])
+    print(destination_popularity_list)
     most_popular_destinations = []
     for dest,popularity in destination_popularity_list[-5:]:
         if popularity > 0:
