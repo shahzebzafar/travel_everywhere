@@ -139,6 +139,11 @@ def add_blog_like(blog, user):
     blog_like.save()
     return blog_like
 
+def add_blog_fully(title, body, bodySummary, location_country, location_city, location_place, user):
+    blog = Blog.objects.get_or_create(title=title, body=body, bodySummary=bodySummary, location_country=location_country, location_city=location_city, location_place=location_place, user=user)[0]
+    blog.save()
+    return blog
+
 class TravelViewTests(TestCase):
 
     def test_travel_view_with_no_airlines(self):
@@ -392,6 +397,22 @@ class HomeViewTests(TestCase):
         self.assertContains(response, "Japan")
         self.assertContains(response, "Rome")
         self.assertContains(response, "Venice")
+
+class BlogViewTests(TestCase):
+
+    def test_blog_view_shows_all_blog_titles(self):
+        """
+        Check whether blog titles are displayed on blog page correctly.
+        """
+        add_blog("Trip to Japan")
+        add_blog("When in Rome")
+
+        response = self.client.get(reverse('traveleverywhere:blogs'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Trip to Japan")
+        self.assertContains(response, "When in Rome")
+
+
         
 
 
