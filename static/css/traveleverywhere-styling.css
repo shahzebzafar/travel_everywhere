@@ -48,3 +48,11 @@
     margin-top: 10px;
     margin-bottom: 1px;
 }
+
+.white-text {
+    color: white;
+}
+
+.jumbotron {
+    background-color: rgb(13, 196, 196);
+}

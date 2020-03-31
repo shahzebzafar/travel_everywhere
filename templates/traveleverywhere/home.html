@@ -6,33 +6,78 @@
 {% endblock %}
 	
 {% block body_block %}
-	<div>
-		{% if featured_blog %}
-			<h1>Featured blog</h1>
+	<div class="jumbotron p-4">
+		<div class="container">
+			<h1 class="jumbotron-heading text-center">TravelEverywhere</h1>
 			<div>
-				<p>{{ featured_blog.title }}</p>
-				<p>{{ featured_blog.bodySummary }}</p>
-				<a href="{% url 'traveleverywhere:show_blog' featured_blog.slug %}">Continue reading</a>
+				<h4 class="h4 text-center">
+					{% if user.is_authenticated %}
+						Hello, {{ user.username }}! Are you ready to explore the world?
+					{% else %} 
+						Are you ready to explore the world? 
+					{% endif %}
+				</h4>
 			</div>
-		{% endif %}
+		</div>
 	</div>
-	<div>
-		{% if most_popular_questions %}
-			<h1>Most popular questions</h1>
-			{% for question in most_popular_questions %}
-				<a href="{% url 'traveleverywhere:show_question' question.slug %}">{{ question.title }}</a></br>
-			{% endfor %}
-		{% endif %}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="card mb-4">
+					<div class="card-body">
+						<h2>Featured blog</h2>
+						<p class="card-text">
+							{% if featured_blog %}
+								<dl>
+									<dt>{{ featured_blog.title }}</dt>
+									<dd>
+										<p>{{ featured_blog.bodySummary }}</p>
+										<a href="{% url 'traveleverywhere:show_blog' featured_blog.slug %}">Continue reading</a>
+									</dd>
+								</dl>
+							{% endif %}
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="card mb-4">
+					<div class="card-body">
+						<h2>Most popular questions</h2>
+						<p class="card-text">
+							{% if most_popular_questions %}
+								<ul class="list-group">
+									{% for question in most_popular_questions %}
+										<a class="list-group-item quest-item" href="{% url 'traveleverywhere:show_question' question.slug %}">{{ question.title }}</a></br>
+									{% endfor %}
+								</ul>
+							{% endif %}
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="card mb-4">
+					<div class="card-body">
+						<h1>Most popular destinations</h1>
+						<p class="card-text">
+							{% if most_popular_destinations %}
+								<ul class="list-group">
+									{% for destination in most_popular_destinations %}
+										<li class="list-group-item">
+											<p>{{ destination }}</p>
+										</li>
+									{% endfor %}
+								</ul>
+							{% endif %}
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="w-100"></div>
+			<div class="col-md-12">
+				<img class="img-fluid rounded mx-auto d-block" src="{% static 'images/plane.jpg' %}" alt="TravelEverywhere home Picture"/>
+			</div>
+		</div>
 	</div>
-	<div>
-		{% if most_popular_destinations %}
-			<h1>Most popular destinations</h1>
-			{% for destination in most_popular_destinations %}
-				<p>{{ destination }}</p>
-			{% endfor %}
-		{% endif %}
-	</div>
-	<div>
-		<img src="{% static 'images/plane.jpg' %}" alt="TravelEverywhere home Picture"/>
-	</div>>
 {% endblock %}

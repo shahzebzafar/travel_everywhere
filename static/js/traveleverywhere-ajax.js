@@ -83,6 +83,13 @@ $(document).ready(function() {
                 $("#website button[data-websiteid='"+websiteIdVar+"'].like").removeClass("disabled");
             })
     });
+    $('.quest-item').hover(function(){
+        $(this).addClass("white-text");
+        $(this).addClass("active");
+        }, function(){
+        $(this).removeClass("white-text");
+        $(this).removeClass("active");
+    });
     $('#airline').DataTable();
     $('#agency').DataTable();
     $('#website').DataTable();
