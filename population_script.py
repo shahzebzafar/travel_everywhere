@@ -154,7 +154,7 @@ def add_website(name,link):
 def add_blog(title, body, bodySummary, location_country, location_city, location_place, user):
     b = Blog.objects.get_or_create(title=title, body=body, bodySummary = bodySummary, location_country=location_country, location_city=location_city, location_place=location_place)[0]
     b.user = user
-    b.save
+    b.save()
     return b
 
 if __name__ == '__main__':
