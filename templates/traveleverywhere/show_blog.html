@@ -23,7 +23,7 @@
                 </button>
             {% endif %}
         </div>
-        <p>{{ blog.body }}</p>
+        <p>{{ blog.body|linebreaks }}</p>
         <p>{{ blog.user }}</p>
         <p>{{ blog.publish_date }}</p>
         <p>{{ blog.location_country }}</p>
