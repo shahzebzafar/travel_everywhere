@@ -115,9 +115,9 @@ def populate():
     for web in BookingWebsite.objects.all():
         print(f'-{web}')
     
-    add_blog(blog1['title'], blog1['body'], blog1['country'], blog1['city'], blog1['place'], user1)
-    add_blog(blog2['title'], blog2['body'], blog2['country'], blog2['city'], blog2['place'], user2)
-    add_blog(blog3['title'], blog3['body'], blog3['country'], blog3['city'], blog3['place'], user3)
+    add_blog(blog1['title'], blog1['body'], blog1['body'][:200] + "...", blog1['country'], blog1['city'], blog1['place'], user1)
+    add_blog(blog2['title'], blog2['body'], blog2['body'][:200] + "...", blog2['country'], blog2['city'], blog2['place'], user2)
+    add_blog(blog3['title'], blog3['body'], blog3['body'][:200] + "...", blog3['country'], blog3['city'], blog3['place'], user3)
     
 def add_user(username, password):
     user = User.objects.get_or_create(username=username, password=password)[0]
@@ -151,8 +151,8 @@ def add_website(name,link):
     website.save()
     return website
     
-def add_blog(title, body, location_country, location_city, location_place, user):
-    b = Blog.objects.get_or_create(title=title, body=body, location_country=location_country, location_city=location_city, location_place=location_place)[0]
+def add_blog(title, body, bodySummary, location_country, location_city, location_place, user):
+    b = Blog.objects.get_or_create(title=title, body=body, bodySummary = bodySummary, location_country=location_country, location_city=location_city, location_place=location_place)[0]
     b.user = user
     b.save
     return b

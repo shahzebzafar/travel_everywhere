@@ -56,7 +56,6 @@ def home(request):
             if destination.lower() in title:
                 destination_popularity[destination] += 1
     destination_popularity_list = sorted(destination_popularity.items(), key=lambda x: x[1])
-    print(destination_popularity_list)
     most_popular_destinations = []
     for dest,popularity in destination_popularity_list[-5:]:
         if popularity > 0:
@@ -134,8 +133,10 @@ def blogs(request):
     context_dict = {}
     blogs = []
     for blog in blogs_list:
+        image_list = Blog_Image.objects.filter(blog=blog)[:1]
+
         blogSummary = blog.bodySummary
-        blogs.append((blog, blogSummary))
+        blogs.append((blog, blogSummary, image_list))
     context_dict['blogs'] = blogs
     return render(request, 'traveleverywhere/blogs.html', context = context_dict)
 

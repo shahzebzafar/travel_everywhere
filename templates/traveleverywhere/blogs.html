@@ -12,10 +12,13 @@
 		{% endif %}
 		{% if blogs %}
 			<ul>
-				{% for blog, blogSummary in blogs %}
+				{% for blog, blogSummary, image_list in blogs %}
 				<li>
 					<a href="{% url 'traveleverywhere:show_blog' blog.slug %}">{{ blog.title }}</a>
 					<p>{{ blogSummary }}</p>
+					{% for image in image_list %}
+						<img src="{{ image.image.url }}" />
+					{% endfor %}
 				</li>
 				{% endfor %}
 			</ul>
