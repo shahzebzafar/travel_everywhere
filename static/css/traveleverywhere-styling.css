@@ -66,3 +66,21 @@
 .form-title {
     margin-top: 10px;
 }
+
+.blog-title {
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.blog-body {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.like-user-blog {
+    margin-left: 50px;
+}
+
+.blog-attr {
+    margin-right: 50px;
+}

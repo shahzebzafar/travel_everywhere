@@ -5,37 +5,58 @@
 {% endblock %}
 
 {% block body_block %}
-<div>
+<div class="row">
     {% if blog %}
-        {% if user.is_authenticated %}
-            {% if blog.user == user %}
-                <a href="{% url 'traveleverywhere:add_image' blog.slug %}">Add Image</a><br/>
-            {% endif %}
-        {% endif %}
-        <h1>{{ blog.title }}</h1>
-        <div>
-            <strong id="like_count">{{ likes }}</strong> likes
-            {% if user.is_authenticated %}
-                <button id="like_btn" data-blogid="{{ blog.id }}" 
-                    class="btn btn-primary btn-sm {% if liked_bool %} disabled {% endif %}" 
-                    type="button">
-                    Like Blog
-                </button>
+        <div class="col-md-10">
+            <h1 class="text-center font-italic blog-title">{{ blog.title }}</h1>
+            <div class="blog-body">
+                <p>{{ blog.body|linebreaks }}</p>
+                
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="float-sm-right link-button">
+                {% if user.is_authenticated %}
+                    {% if blog.user == user %}
+                        <a role="button" class="btn btn-primary" href="{% url 'traveleverywhere:add_image' blog.slug %}">Add Image</a><br/>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="w-100"></div>
+        <div class="col-5">
+            <div class="like-user-blog">
+                <div>
+                    <strong id="like_count">{{ likes }}</strong> likes
+                    {% if user.is_authenticated %}
+                        <button id="like_btn" data-blogid="{{ blog.id }}" 
+                            class="btn btn-primary btn-sm {% if liked_bool %} disabled {% endif %}" 
+                            type="button">
+                            Like Blog
+                        </button>
+                    {% endif %}
+                </div>
+                <p>Creator: {{ blog.user }}</p>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="blog-attr float-sm-right">
+                <p>{{ blog.publish_date }}</p>
+                <p>{{ blog.location_country }}</p>
+                <p>{{ blog.location_city }}</p>
+                <p>{{ blog.location_place }}</p>
+            </div>
+        </div>
+        <div class="w-100"></div>
+        <div class="col-md-10">
+            {% if images %}
+                <ul>
+                    {% for image in images %}
+                        <img class="img-fluid rounded mx-auto d-block" src="{{ image.image.url }}" />
+                    {% endfor %}
+                </ul>
             {% endif %}
         </div>
-        <p>{{ blog.body|linebreaks }}</p>
-        <p>{{ blog.user }}</p>
-        <p>{{ blog.publish_date }}</p>
-        <p>{{ blog.location_country }}</p>
-        <p>{{ blog.location_city }}</p>
-        <p>{{ blog.location_place }}</p>
-        {% if images %}
-            <ul>
-                {% for image in images %}
-                    <img src="{{ image.image.url }}" />
-                {% endfor %}
-            </ul>
-        {% endif %}
     {% else %}
         The specified blog does not exist.
     {% endif %}
