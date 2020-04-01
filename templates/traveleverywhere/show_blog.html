@@ -5,10 +5,14 @@
 {% endblock %}
 
 {% block body_block %}
+<div class="jumbotron p-4">
+    <div class="container">
+        <h1 class="jumbotron-heading font-italic text-left">{{ blog.title }}</h1>
+    </div>
+</div>
 <div class="row">
     {% if blog %}
         <div class="col-md-10">
-            <h1 class="text-center font-italic blog-title">{{ blog.title }}</h1>
             <div class="blog-body">
                 <p>{{ blog.body|linebreaks }}</p>
                 
@@ -41,10 +45,22 @@
         </div>
         <div class="col-5">
             <div class="blog-attr float-sm-right">
-                <p>{{ blog.publish_date }}</p>
-                <p>{{ blog.location_country }}</p>
-                <p>{{ blog.location_city }}</p>
-                <p>{{ blog.location_place }}</p>
+                {% if blog.publish_date %}
+                    {{ blog.publish_date }}
+                    <br>
+                {% endif %}
+                {% if blog.location_country %}
+                    {{ blog.location_country }}
+                    <br>
+                {% endif %}
+                {% if blog.location_city %}
+                    {{ blog.location_city }}
+                    <br>
+                {% endif %} 
+                {% if blog.location_place %}
+                    {{ blog.location_place }}
+                    <br>
+                {% endif %} 
             </div>
         </div>
         <div class="w-100"></div>
@@ -61,4 +77,6 @@
         The specified blog does not exist.
     {% endif %}
 </div>
+<br>
+<br>
 {% endblock %}

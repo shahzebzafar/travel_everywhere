@@ -7,7 +7,9 @@
 {% endblock %}
 
 {% block body_block %}
-<h1 class="text-center form-title">Add a question</h1>
+<div class="jumbotron p-2">
+    <h1 class="jumbotron-heading text-center form-title">Ask a question</h1>
+</div>
 <div class="form">
     <form id='question_form' method='post' action="{% url 'traveleverywhere:add_question' %}">
         {% csrf_token %}

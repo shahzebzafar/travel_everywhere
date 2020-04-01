@@ -8,18 +8,18 @@ from django.contrib.auth.models import User
 
 def populate():
     answers_q1 = [
-        {'text' : 'I think the best place you could go in September depends on what you aim to do. Last year I went to Canarian islands and do not regret it but the year before that I was in Turkey and this was also a great experience.'},
-        {'text' : 'I would suggest you go somewhere popular because in September the tourists will not be that many.'},
+        {'text' : 'I think the best place you could go in September depends on what you aim to do. Last year I went to the Canary Islands and do not regret it but the year before that I was in Turkey and this was also a great experience.'},
+        {'text' : "I would suggest you go somewhere popular because there won't be as many tourists in September."},
     ]
 
     answers_q2 = [
-        {'text': 'Right now the tickets to Iceland are really cheap so if I were you, I would go wathc them there.'},
+        {'text': 'Right now the tickets to Iceland are really cheap so if I were you, I would go watch them there.'},
     ]
 
     questions = {
         'Where is the best place to go in September?': {'answers': answers_q1,
-        'body' : 'Hello, I am planning a big trip this autumn and would love to give me some advice on where.'},
-        'Best place to see the Northen lights?': {'answers' : answers_q2,
+        'body' : 'Hello, I am planning a big trip this autumn and would love some advice on where I could go.'},
+        'Best place to see the Northern lights?': {'answers' : answers_q2,
         'body' : 'I want to ask fellow travellers where to go to see the Northern lights this year.'},
     }
     

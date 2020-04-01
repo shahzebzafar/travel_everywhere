@@ -6,7 +6,12 @@
 {% endblock %}
 	
 {% block body_block %}
-<h1 class="text-center login-title">Login to TravelEverywhere</h1>
+<div class="jumbotron p-2">
+    <div class="container">
+        <h1 class="jumbotron-heading login-title text-center">Login to TravelEverywhere</h1>
+    </div>
+</div>
+<!-- <h1 class="text-center login-title">Login to TravelEverywhere</h1> -->
 <div class='container login-box w-50 mx-auto'>
 	<form class='form-signin' role='form' id="login_form" method="post" action="{% url 'traveleverywhere:login' %}">
 		{% csrf_token %}
@@ -22,7 +27,7 @@
 			value="Submit">Login</button>
 	</form>
 	<div>
-		<p class="text-center login-quest">You don't have an account yet?
+		<p class="text-center login-quest">Don't have an account yet?
 			<a href="{% url 'traveleverywhere:signup' %}">Sign up</a>
 		</p>
 	</div>

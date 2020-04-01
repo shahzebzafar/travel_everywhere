@@ -7,7 +7,11 @@
 {% endblock %}
 
 {% block body_block %}
-<h1 class="text-center form-title">Create a new blog</h1>
+<div class="jumbotron p-2">
+    <div class="container">
+        <h1 class="jumbotron-heading text-center">Create a new blog</h1>
+    </div>
+</div>
 <div class="form">
 	<form id = 'blog_form' method = 'post' action = "{% url 'traveleverywhere:add_blog' %}">
 		{% csrf_token %}
@@ -20,5 +24,7 @@
 		{% endfor %}
 		<input class="btn btn-primary btn-lg btn-block" type="submit" name="submit" value="Create Blog" />
 	</form>
+	<br>
+	<br>
 </div>
 {% endblock %}
