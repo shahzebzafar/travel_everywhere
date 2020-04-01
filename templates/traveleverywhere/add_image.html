@@ -1,12 +1,14 @@
 {% extends 'traveleverywhere/base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block title_block %}
 	TravelEverywhere
 {% endblock %}
 
 {% block body_block %}
-<h1>Add an image to {{ blog.title }}</h1>
-<div>
+<h1 class="text-center form-title">Add an image to "{{ blog.title }}"</h1>
+<div class="form">
     <form id="add_image_form" method='post' action="{% url 'traveleverywhere:add_image' blog.slug %}" enctype="multipart/form-data">
         {% csrf_token %}
         {% for hidden in form.hidden_fields %}
@@ -15,9 +17,9 @@
         {% for field in form.visible_fields %}
             {{ field.errors }}
             {{ field.help_text }}
-            {{ field }}
+            {{ field|as_crispy_field }}
         {% endfor %}
-        <input type='submit' name='submit' value='Upload' />
+        <input class="btn btn-primary btn-lg btn-block" type='submit' name='submit' value='Upload' />
     </form>
 </div>
 {% endblock %}
