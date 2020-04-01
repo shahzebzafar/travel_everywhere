@@ -56,3 +56,13 @@
 .jumbotron {
     background-color: rgb(13, 196, 196);
 }
+
+.blog-form {
+    margin-left: 200px;
+    margin-right: 200px;
+    margin-top: 30px;
+}
+
+.form-title {
+    margin-top: 10px;
+}
