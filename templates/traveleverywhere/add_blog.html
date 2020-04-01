@@ -8,7 +8,7 @@
 
 {% block body_block %}
 <h1 class="text-center form-title">Create a new blog</h1>
-<div class="blog-form">
+<div class="form">
 	<form id = 'blog_form' method = 'post' action = "{% url 'traveleverywhere:add_blog' %}">
 		{% csrf_token %}
 		{% for hidden in form.hidden_fields %}

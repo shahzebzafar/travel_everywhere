@@ -1,12 +1,14 @@
 {% extends 'traveleverywhere/base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block title_block %}
 	TravelEverywhere
 {% endblock %}
 
 {% block body_block %}
-<h1>Add a question</h1>
-<div>
+<h1 class="text-center form-title">Add a question</h1>
+<div class="form">
     <form id='question_form' method='post' action="{% url 'traveleverywhere:add_question' %}">
         {% csrf_token %}
         {% for hidden in form.hidden_fields %}
@@ -14,10 +16,9 @@
         {% endfor %}
         {% for field in form.visible_fields %}
             {{ field.errors }}
-            {{ field.help_text }}
-            {{ field }}
+            {{ field|as_crispy_field }}
         {% endfor %}
-        <input type="submit" name="submit" value="Submit Question" />
+        <input class="btn btn-primary btn-lg btn-block" type="submit" name="submit" value="Submit Question" />
     </form>
 </div>
 {% endblock %}
