@@ -539,6 +539,30 @@ class LoginViewTests(TestCase):
         self.client.login(username = user1.username, password = '1234')
         response = self.client.post(reverse('traveleverywhere:home'), {'user_id':user1.id})
         self.assertEqual(response.status_code, 200)
+
+    def test_login_url_exists(self):
+        """
+        Checks whether the login url exists in the correcr place.
+        """
+        url = ''
+        try:
+            url = reverse('traveleverywhere:login')
+        except:
+            pass
+        self.assertEqual(url, '/traveleverywhere/login/')
+
+    def test_homepage_greeting(self):
+        """
+        Checks whether the home page greeting is added when a user logs in.
+        """
+        content = self.client.get(reverse('traveleverywhere:home')).content.decode()
+        self.assertTrue('Are you ready to explore the world?' in content)
+        user = User.objects.get_or_create(username='test')[0]
+        user.set_password('test123')
+        user.save()
+        self.client.login(username='test', password='test123')
+        content = self.client.get(reverse('traveleverywhere:home')).content.decode()
+        self.assertTrue('Hello, test! Are you ready to explore the world?' in content)
     
 def get_template(path_to_template):
     """
@@ -582,7 +606,7 @@ class SignupViewTests(TestCase):
         """
         request = self.client.get(reverse('traveleverywhere:signup'))
         content = request.content.decode('utf-8')
-        self.assertTrue('<h1 class="text-center signup-title">Sign up for TravelEverywhere</h1>' in content)
+        self.assertTrue('<h1 class="jumbotron-heading signup-title text-center">Sign up for TravelEverywhere</h1>' in content)
         self.assertTrue('enctype="multipart/form-data"' in content)
         self.assertTrue('<button type="submit" class="btn btn-primary">Sign up</button>' in content)
 
@@ -615,12 +639,29 @@ class SignupViewTests(TestCase):
         post_data = {'username': 'webformuser', 'password': 'test123', 'email': 'test@test.com', 'about': 'I am a Test user.', 'picture': tempfile.NamedTemporaryFile(suffix=".jpg").name}
         request = self.client.post(reverse('traveleverywhere:signup'), post_data)
         content = request.content.decode('utf-8')
-        self.assertTrue('<h1 class="text-center signup-title">Sign up for TravelEverywhere</h1>' in content)
+        self.assertTrue('<h1 class="jumbotron-heading signup-title text-center">Sign up for TravelEverywhere</h1>' in content)
         self.assertTrue('<h2>Thank you for signing up!</h2>' in content)
         self.assertTrue('Return to homepage.' in content)
         self.assertTrue(self.client.login(username='webformuser', password='test123'))
 
+class LogoutTests(TestCase):
 
+    def test_logout_functionality(self):
+        """
+        Checks whether a user who is logged in, can successfully logout.
+        """
+        user = User.objects.get_or_create(username='test')[0]
+        user.set_password('test123')
+        user.save()
+        self.client.login(username='test', password='test123')
+        try:
+            self.assertEqual(user.id, int(self.client.session['_auth_user_id']))
+        except KeyError:
+            self.assertTrue(False)
+        response = self.client.get(reverse('traveleverywhere:logout'))
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse('traveleverywhere:home'))
+        self.assertTrue('_auth_user_id' not in self.client.session)
 
     
 
