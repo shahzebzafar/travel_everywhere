@@ -128,6 +128,83 @@ class UserUserProfileFormTests(TestCase):
             self.assertTrue(expected_field_name in fields.keys())
             self.assertEqual(expected_field, type(fields[expected_field_name]))
 
+class BlogFormTests(TestCase):
+
+    def test_blog_form(self):
+        """
+        Checks whether BlogForm is in the correct place and has the correct fields.
+        """
+        self.assertTrue('BlogForm' in dir(forms))
+        blog_form = forms.BlogForm()
+        self.assertEqual(type(blog_form.__dict__['instance']), traveleverywhere.models.Blog)
+        fields = blog_form.fields
+        expected_fields = {
+            'title':django_fields.CharField, 
+            'body':django_fields.CharField, 
+            'location_country': django_fields.CharField, 
+            'location_city':django_fields.CharField,
+            'location_place':django_fields.CharField,
+        }
+        for expected_field_name in expected_fields:
+            expected_field = expected_fields[expected_field_name]
+            self.assertTrue(expected_field_name in fields.keys())
+            self.assertEqual(expected_field, type(fields[expected_field_name]))
+
+class BlogImageFormTests(TestCase):
+
+    def test_blog_image_form(self):
+        """
+        Checks whether BlogImageForm is in the correct place and has correct fields.
+        """
+        self.assertTrue('BlogImageForm' in dir(forms))
+        blog_image_form = forms.BlogImageForm()
+        self.assertEqual(type(blog_image_form.__dict__['instance']), traveleverywhere.models.Blog_Image)
+        fields = blog_image_form.fields
+        expected_fields = {
+            'image':django_fields.ImageField,
+        }
+        for expected_field_name in expected_fields:
+            expected_field = expected_fields[expected_field_name]
+            self.assertTrue(expected_field_name in fields.keys())
+            self.assertEqual(expected_field, type(fields[expected_field_name]))
+
+class QuestionFormTests(TestCase):
+
+    def test_question_form(self):
+        """
+        Checks whether QuestionForm is in the correct place and has correct fields.
+        """
+        self.assertTrue('QuestionForm' in dir(forms))
+        question_form = forms.QuestionForm()
+        self.assertEqual(type(question_form.__dict__['instance']), traveleverywhere.models.Question)
+        fields = question_form.fields
+        expected_fields = {
+            'title':django_fields.CharField,
+            'body':django_fields.CharField,
+        }
+        for expected_field_name in expected_fields:
+            expected_field = expected_fields[expected_field_name]
+            self.assertTrue(expected_field_name in fields.keys())
+            self.assertEqual(expected_field, type(fields[expected_field_name]))
+
+class AnswerFormTests(TestCase):
+
+    def test_answer_form(self):
+        """
+        Checks whether AnswerForm is in the correct place and has correct fields.
+        """
+        self.assertTrue('AnswerForm' in dir(forms))
+        answer_form = forms.AnswerForm()
+        self.assertEqual(type(answer_form.__dict__['instance']), traveleverywhere.models.Answer)
+        fields = answer_form.fields
+        expected_fields = {
+            'text':django_fields.CharField,
+        }
+        for expected_field_name in expected_fields:
+            expected_field = expected_fields[expected_field_name]
+            self.assertTrue(expected_field_name in fields.keys())
+            self.assertEqual(expected_field, type(fields[expected_field_name]))
+
 def add_question(title):
     question = Question.objects.get_or_create(title=title)[0]
     question.save()
@@ -192,7 +269,8 @@ def add_website(name,link):
     return website
 
 def add_user(username, password):
-    user = User.objects.get_or_create(username=username, password=password)[0]
+    user = User.objects.get_or_create(username=username)[0]
+    user.set_password(password)
     user.save()
     return user
 
@@ -663,8 +741,203 @@ class LogoutTests(TestCase):
         self.assertEqual(response.url, reverse('traveleverywhere:home'))
         self.assertTrue('_auth_user_id' not in self.client.session)
 
+class AddBlogViewTests(TestCase):
+
+    def test_blog_view_exists(self):
+        """
+        Checks if the add_blog view exists in the correct place.
+        """
+        url = ''
+        try:
+            url = reverse('traveleverywhere:add_blog')
+        except:
+            pass
+        self.assertEqual(url, '/traveleverywhere/blogs/add_blog/')
+
+    def test_add_blog_template(self):
+        """
+        Checks if the add_blog.html exists in he correct place and
+        if it uses the template inheritance.
+        """
+        template_base_path = os.path.join(settings.TEMPLATE_DIR, 'traveleverywhere')
+        template_path = os.path.join(template_base_path, 'add_blog.html')
+        self.assertTrue(os.path.exists(template_path))
+        template_str = get_template(template_path)
+        title_pattern = r'{% block title_block %}(\s*|\n*)TravelEverywhere(\s*|\n*){% (endblock|endblock title_block) %}'
+        self.assertTrue(re.search(title_pattern, template_str))
+
+    def test_add_blog_get_response(self):
+        """
+        Checks the GET response of add_blog view if user is logged in.
+        """
+        user = add_user('test', 'test123')
+        self.client.login(username='test', password='test123')
+        request = self.client.get(reverse('traveleverywhere:add_blog'))
+        content = request.content.decode('utf-8')
+        self.assertTrue('<h1 class="jumbotron-heading text-center">Create a new blog</h1>' in content)
+        self.assertTrue('<input class="btn btn-primary btn-lg btn-block" type="submit" name="submit" value="Create Blog" />' in content)
+
+    def test_add_blog_form_creation(self):
+        """
+        Creates a BlogForm and attempts to save it.
+        """
+        blog_data = {'title':'Test Blog', 'body': 'Test Body of Blog', 'location_country':'Test Country', 'location_city':'Test City', 'location_place':'Test Place'}
+        blog_form = forms.BlogForm(data=blog_data)
+        self.assertTrue(blog_form.is_valid())
+        blog_object = blog_form.save()
+        self.assertEqual(len(Blog.objects.all()), 1)
+
+class AddImageViewTests(TestCase):
+
+    def test_add_image_template(self):
+        """
+        Checks if the add_image.html exists in he correct place and
+        if it uses the template inheritance.
+        """
+        template_base_path = os.path.join(settings.TEMPLATE_DIR, 'traveleverywhere')
+        template_path = os.path.join(template_base_path, 'add_image.html')
+        self.assertTrue(os.path.exists(template_path))
+        template_str = get_template(template_path)
+        title_pattern = r'{% block title_block %}(\s*|\n*)TravelEverywhere(\s*|\n*){% (endblock|endblock title_block) %}'
+        self.assertTrue(re.search(title_pattern, template_str))
+
+class ShowBlogViewTests(TestCase):
+
+    def test_context_dict(self):
+        """
+        Checks whether the show_blog context dictionary passes right information to template.
+        """
+        blog = add_blog('Test Blog')
+        image_list = list(Blog_Image.objects.filter(blog=blog))
+        self.response = self.client.get(reverse('traveleverywhere:show_blog', kwargs={'blog_name_slug': 'test-blog'}))
+        self.content = self.response.content.decode()
+        self.assertTrue('blog' in self.response.context)
+        self.assertTrue('images' in self.response.context)
+        self.assertEqual(self.response.context['blog'], blog)
+        self.assertEqual(list(self.response.context['images']), image_list)
+
+class ShowQuestionViewTests(TestCase):
+
+    def test_show_question_context_dict(self):
+        """
+        Checks whether the show_question context dictionary has correct format.
+        """
+        question = add_question('Test Question')
+        answers = list(Answer.objects.filter(question=question))
+        self.response = self.client.get(reverse('traveleverywhere:show_question', kwargs={'question_name_slug':'test-question'}))
+        self.content = self.response.content.decode()
+        self.assertTrue('question' in self.response.context)
+        self.assertTrue('answers' in self.response.context)
+        self.assertEqual(self.response.context['question'], question)
+        self.assertEqual(list(self.response.context['answers']), answers)
+
+    def test_questions_and_answers_displayed_in_show_question_template(self):
+        """
+        Checks whether the question and its answers are displayed correctly on the page.
+        """
+        question = add_question('Test Question')
+        answer1 = add_answer('Test answer 1', question)
+        answer2 = add_answer('Test answer 2', question)
+        response = self.client.get(reverse('traveleverywhere:show_question', kwargs={'question_name_slug':'test-question'}))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Test Question')
+        self.assertContains(response, 'Test answer 1')
+        self.assertContains(response, 'Test answer 2')
+
+class AddQuestionViewTests(TestCase):
+
+    def test_add_queston_view_exists(self):
+        """
+        Checks if the add_question view exists in the correct place.
+        """
+        url = ''
+        try:
+            url = reverse('traveleverywhere:add_question')
+        except:
+            pass
+        self.assertEqual(url, '/traveleverywhere/forum/add_question/')
+    
+    def test_add_question_template(self):
+        """
+        Checks if the add_question.html exists in he correct place and
+        if it uses the template inheritance.
+        """
+        template_base_path = os.path.join(settings.TEMPLATE_DIR, 'traveleverywhere')
+        template_path = os.path.join(template_base_path, 'add_question.html')
+        self.assertTrue(os.path.exists(template_path))
+        template_str = get_template(template_path)
+        title_pattern = r'{% block title_block %}(\s*|\n*)TravelEverywhere(\s*|\n*){% (endblock|endblock title_block) %}'
+        self.assertTrue(re.search(title_pattern, template_str))
+
+    def test_add_question_get_response(self):
+        """
+        Checks the GET response of add_question view if user is logged in.
+        """
+        user = add_user('test', 'test123')
+        self.client.login(username='test', password='test123')
+        request = self.client.get(reverse('traveleverywhere:add_question'))
+        content = request.content.decode('utf-8')
+        self.assertTrue('<h1 class="jumbotron-heading text-center form-title">Ask a question</h1>' in content)
+        self.assertTrue('<input class="btn btn-primary btn-lg btn-block" type="submit" name="submit" value="Submit Question" />' in content)
+
+    def test_add_question_form_creation(self):
+        """
+        Creates a QuestionForm and attempts to save it.
+        """
+        question_data = {'title':'Test Question', 'body': 'Test Body of Question',}
+        question_form = forms.QuestionForm(data=question_data)
+        self.assertTrue(question_form.is_valid())
+        question_object = question_form.save()
+        self.assertEqual(len(Question.objects.all()), 1)
+
+class AddAnswerViewTests(TestCase):
+
+    def test_add_answer_view_exists(self):
+        """
+        Checks if the add_answer view exists in the correct place.
+        """
+        url = ''
+        question = add_question('Test Question')
+        answer = Answer.objects.filter(question=question)
+        try:
+            url = reverse('traveleverywhere:add_answer', kwargs={'question_name_slug':'test-question'})
+        except:
+            pass
+        self.assertEqual(url, '/traveleverywhere/forum/show_question/test-question/add_answer/')
+
+    def test_add_answer_template(self):
+        """
+        Checks if the add_answer.html exists in he correct place and
+        if it uses the template inheritance.
+        """
+        template_base_path = os.path.join(settings.TEMPLATE_DIR, 'traveleverywhere')
+        template_path = os.path.join(template_base_path, 'add_answer.html')
+        self.assertTrue(os.path.exists(template_path))
+        template_str = get_template(template_path)
+        title_pattern = r'{% block title_block %}(\s*|\n*)TravelEverywhere(\s*|\n*){% (endblock|endblock title_block) %}'
+        self.assertTrue(re.search(title_pattern, template_str))
+
+    def test_add_answer_get_response(self):
+        """
+        Checks the GET response of add_answer view if user is logged in.
+        """
+        user = add_user('test', 'test123')
+        self.client.login(username='test', password='test123')
+        question = add_question('Test Question')
+        answer = Answer.objects.filter(question=question)
+        request = self.client.get(reverse('traveleverywhere:add_answer', kwargs={'question_name_slug':'test-question'}))
+        content = request.content.decode('utf-8')
+        self.assertTrue('<h1 class="jumbotron-heading text-center form-title">Add an answer to "Test Question"</h1>' in content)
+
+    
     
 
+    
+        
+    
+
+
+    
 
 
 
