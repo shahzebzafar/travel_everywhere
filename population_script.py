@@ -120,7 +120,8 @@ def populate():
     add_blog(blog3['title'], blog3['body'], blog3['body'][:200] + "...", blog3['country'], blog3['city'], blog3['place'], user3)
     
 def add_user(username, password):
-    user = User.objects.get_or_create(username=username, password=password)[0]
+    user = User.objects.get_or_create(username=username)[0]
+    user.set_password(password)
     user.save()
     return user
 
