@@ -1,5 +1,6 @@
 {% extends 'traveleverywhere/base.html' %} 
 {% load staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block title_block %} 
     Profile for {{ selected_user.username }} 
@@ -18,16 +19,16 @@
         height="300" 
         alt="{{ selected_user.username }}'s profile image" /> 
         <br />
-        <div> 
+        <div class="profile-form"> 
             {% if selected_user == user %} 
             <form method="post" action="." enctype="multipart/form-data"> 
-                {% csrf_token %} 
-                {{ form.as_p }}
-                <input type="submit" value="Update" /> 
+                {% csrf_token %}
+                {{ form|crispy}}
+                <input class="btn btn-primary" type="submit" value="Update" />
             </form> 
             {% else %} 
             <p>
-                <strong>About:</strong> 
+                <strong>About:</strong>
                 <a href="{{ user_profile.about }}">{{ user_profile.about }}</a> 
             </p>
             {% endif %} 
