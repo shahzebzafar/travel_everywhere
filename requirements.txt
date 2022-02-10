@@ -1,6 +1,6 @@
 certifi==2019.11.28
 coverage==5.0.4
-Django==2.2.3
+Django==2.2.27
 django-crispy-forms==1.9.0
 django-registration-redux==2.2
 Pillow==7.0.0
